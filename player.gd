@@ -10,6 +10,7 @@ enum State {
 	IDLE,
 	RUNNING,
 	JUMP,
+	SECOND_JUMP,
 	FALL,
 	LANDING,
 	WALL_SLIDING,
@@ -28,6 +29,9 @@ const GROUND_STATES := [
 	State.IDLE, State.RUNNING, State.LANDING,
 	State.ATTACK_1, State.ATTACK_2, State.ATTACK_3,
 ]
+const WALL_STATES := [
+	State.WALL_JUMP, State.WALL_SLIDING
+]
 const RUN_SPEED := 160.0
 const FLOOR_ACCELERATION := RUN_SPEED / 0.2
 const AIR_ACCELERATION := RUN_SPEED / 0.1
@@ -38,6 +42,8 @@ const SLIDING_DURATION := 0.3
 const SLIDING_SPEED := 256.0
 const SLIDING_ENERGY := 4.0
 const LANDING_HEIGHT := 100.0
+const WALL_EDGE_ACCELERATION := -80
+const TIME_BETWEEN_JUMP_AND_SECOND_JUMP := 0.2
 
 @export var can_combo := false
 @export var direction := Direction.RIGHT:
@@ -48,12 +54,15 @@ const LANDING_HEIGHT := 100.0
 		graphics.scale.x = direction
 
 var default_gravity := ProjectSettings.get("physics/2d/default_gravity") as float
+var wall_slide_gravity := default_gravity / 10
 var is_first_tick := false
 var is_combo_requested := false
 var pending_damage: Damage
 var fall_from_y: float
 var interacting_with: Array[Interactable]
+var can_second_jump := false
 
+@onready var slide_jump_coyote_timer: Timer = $SlideJumpCoyoteTimer
 @onready var graphics: Node2D = $Graphics
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var coyote_timer: Timer = $CoyoteTimer
@@ -62,11 +71,17 @@ var interacting_with: Array[Interactable]
 @onready var foot_checker: RayCast2D = $Graphics/FootChecker
 @onready var state_machine: Node = $StateMachine
 @onready var stats: Node = Game.player_stats
+@onready var jump_wall_edge_acceleration_timer: Timer = $JumpWallEdgeAccelerationTimer
+@onready var wall_jump_wall_edge_acceleration_timer: Timer = $WallJumpWallEdgeAccelerationTimer
+@onready var second_jump_wait_timer: Timer = $SecondJumpWaitTimer
 @onready var invincible_timer: Timer = $InvincibleTimer
 @onready var slide_request_timer: Timer = $SlideRequestTimer
 @onready var interaction_icon: AnimatedSprite2D = $InteractionIcon
 @onready var game_over_screen: Control = $CanvasLayer/GameOverScreen
 @onready var pause_screen: Control = $CanvasLayer/PauseScreen
+@onready var wall_slide_min_timer: Timer = $WallSlideMinTimer
+@onready var wall_jump_hand_checker: RayCast2D = $Graphics/WallJumpHandChecker
+@onready var wall_jump_foot_checker: RayCast2D = $Graphics/WallJumpFootChecker
 
 
 func _ready() -> void:
@@ -76,7 +91,7 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("jump"):
 		jump_request_timer.start()
-	
+
 	if event.is_action_released("jump"):
 		jump_request_timer.stop()
 		if velocity.y < JUMP_VELOCITY / 2:
@@ -106,12 +121,20 @@ func tick_physics(state: State, delta: float) -> void:
 	match state:
 		State.IDLE:
 			move(default_gravity, delta)
-		
 		State.RUNNING:
 			move(default_gravity, delta)
 		
 		State.JUMP:
 			move(0.0 if is_first_tick else default_gravity, delta)
+			if not hand_checker.is_colliding() and foot_checker.is_colliding() and jump_wall_edge_acceleration_timer.time_left == 0 and velocity.y > -100:
+				jump_wall_edge_acceleration_timer.start()
+				velocity.y += WALL_EDGE_ACCELERATION
+				
+		State.SECOND_JUMP:
+			move(0.0 if is_first_tick else default_gravity, delta)
+			if not hand_checker.is_colliding() and foot_checker.is_colliding() and jump_wall_edge_acceleration_timer.time_left == 0 and velocity.y > -100:
+				jump_wall_edge_acceleration_timer.start()
+				velocity.y += WALL_EDGE_ACCELERATION
 		
 		State.FALL:
 			move(default_gravity, delta)
@@ -120,7 +143,7 @@ func tick_physics(state: State, delta: float) -> void:
 			stand(default_gravity, delta)
 		
 		State.WALL_SLIDING:
-			move(default_gravity / 3, delta)
+			move(default_gravity / 15, delta)
 			direction = Direction.LEFT if get_wall_normal().x < 0 else Direction.RIGHT
 		
 		State.WALL_JUMP:
@@ -129,6 +152,9 @@ func tick_physics(state: State, delta: float) -> void:
 				direction = Direction.LEFT if get_wall_normal().x < 0 else Direction.RIGHT
 			else:
 				move(default_gravity, delta)
+				if not wall_jump_hand_checker.is_colliding() and wall_jump_foot_checker.is_colliding() and wall_jump_wall_edge_acceleration_timer.time_left == 0:
+					wall_jump_wall_edge_acceleration_timer.start()
+					velocity.y += WALL_EDGE_ACCELERATION
 		
 		State.ATTACK_1, State.ATTACK_2, State.ATTACK_3:
 			stand(default_gravity, delta)
@@ -193,11 +219,13 @@ func can_wall_slide() -> bool:
 
 
 func should_slide() -> bool:
-	if slide_request_timer.is_stopped():
-		return false
-	if stats.energy < SLIDING_ENERGY:
-		return false
-	return not foot_checker.is_colliding()
+	return false	
+	#if slide_request_timer.is_stopped():
+		#return false
+	#if stats.energy < SLIDING_ENERGY:
+		#return false
+	#return not foot_checker.is_colliding()
+
 
 
 func get_next_state(state: State) -> int:
@@ -211,6 +239,7 @@ func get_next_state(state: State) -> int:
 	var should_jump := can_jump and jump_request_timer.time_left > 0
 	if should_jump:
 		return State.JUMP
+		
 	
 	if state in GROUND_STATES and not is_on_floor():
 		return State.FALL
@@ -236,22 +265,35 @@ func get_next_state(state: State) -> int:
 				return State.IDLE
 		
 		State.JUMP:
+			if state_machine.state_time > TIME_BETWEEN_JUMP_AND_SECOND_JUMP:
+				can_second_jump = true
+			if can_second_jump and jump_request_timer.time_left > 0:
+				return State.SECOND_JUMP
 			if velocity.y >= 0:
 				return State.FALL
 		
+		State.SECOND_JUMP:
+			can_second_jump = false
+			if velocity.y >= 0:
+				return State.FALL
+				
 		State.FALL:
 			if is_on_floor():
 				var height := global_position.y - fall_from_y
 				return State.LANDING if height >= LANDING_HEIGHT else State.RUNNING
 			if can_wall_slide():
 				return State.WALL_SLIDING
+			if jump_request_timer.time_left > 0 and slide_jump_coyote_timer.time_left > 0 and wall_slide_min_timer.time_left == 0:
+				return State.WALL_JUMP
+			if can_second_jump and jump_request_timer.time_left > 0:
+				return State.SECOND_JUMP
 		
 		State.LANDING:
 			if not animation_player.is_playing():
 				return State.IDLE
 		
 		State.WALL_SLIDING:
-			if jump_request_timer.time_left > 0:
+			if jump_request_timer.time_left > 0 and wall_slide_min_timer.time_left == 0:
 				return State.WALL_JUMP
 			if is_on_floor():
 				return State.IDLE
@@ -259,6 +301,10 @@ func get_next_state(state: State) -> int:
 				return State.FALL
 		
 		State.WALL_JUMP:
+			if state_machine.state_time > TIME_BETWEEN_JUMP_AND_SECOND_JUMP:
+				can_second_jump = true
+			if can_second_jump and jump_request_timer.time_left > 0:
+				return State.SECOND_JUMP
 			if can_wall_slide() and not is_first_tick:
 				return State.WALL_SLIDING
 			if velocity.y >= 0:
@@ -296,11 +342,11 @@ func get_next_state(state: State) -> int:
 
 
 func transition_state(from: State, to: State) -> void:
-	print("[%s] %s => %s" % [
-		Engine.get_physics_frames(),
-		State.keys()[from] if from != -1 else "<START>",
-		State.keys()[to],
-	])
+	#print("[%s] %s => %s" % [
+		#Engine.get_physics_frames(),
+		#State.keys()[from] if from != -1 else "<START>",
+		#State.keys()[to],
+	#])
 	
 	if from not in GROUND_STATES and to in GROUND_STATES:
 		coyote_timer.stop()
@@ -319,17 +365,28 @@ func transition_state(from: State, to: State) -> void:
 			jump_request_timer.stop()
 			SoundManager.play_sfx("Jump")
 		
+		State.SECOND_JUMP:
+			animation_player.play("jump")
+			velocity.y = JUMP_VELOCITY
+			jump_request_timer.stop()
+			SoundManager.play_sfx("Jump")
+		
 		State.FALL:
 			animation_player.play("fall")
 			if from in GROUND_STATES:
 				coyote_timer.start()
+			if from == State.WALL_SLIDING:
+				slide_jump_coyote_timer.start()
 			fall_from_y = global_position.y
 		
 		State.LANDING:
 			animation_player.play("landing")
 		
 		State.WALL_SLIDING:
+			velocity.y = 0
 			animation_player.play("wall_sliding")
+			if from != State.WALL_SLIDING:
+				wall_slide_min_timer.start()
 		
 		State.WALL_JUMP:
 			animation_player.play("jump")
