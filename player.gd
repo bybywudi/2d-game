@@ -1,5 +1,6 @@
 class_name Player
 extends CharacterBody2D
+#待完善 1.滑墙的时候应该可以攻击，并且攻击不会打断滑墙状态 2。滑墙跳的时候可以向任意方向攻击且可以立即进入花墙状态 3.站立动作
 
 enum Direction {
 	LEFT = -1,
@@ -17,7 +18,8 @@ enum State {
 	WALL_JUMP,
 	GROUND_ATTACK,
 	JUMP_ATTACK,
-	ATTACK_3,
+	DOWN_ATTACK,
+	UP_ATTACK,
 	HURT,
 	DYING,
 	SLIDING_START,
@@ -156,7 +158,7 @@ func tick_physics(state: State, delta: float) -> void:
 		State.GROUND_ATTACK:
 			stand(default_gravity, delta)
 		
-		State.JUMP_ATTACK:
+		State.JUMP_ATTACK, State.DOWN_ATTACK, State.UP_ATTACK:
 			move(default_gravity, delta)
 			
 		State.HURT, State.DYING:
@@ -280,6 +282,9 @@ func get_next_state(state: State) -> int:
 				return State.SECOND_JUMP
 			if velocity.y >= 0:
 				return State.FALL
+			if Input.is_action_just_pressed("attack") and Input.is_action_pressed("down"):
+				print("down attack jump")
+				return State.DOWN_ATTACK
 			if Input.is_action_just_pressed("attack"):
 				return State.JUMP_ATTACK
 		
@@ -287,6 +292,9 @@ func get_next_state(state: State) -> int:
 			can_second_jump = false
 			if velocity.y >= 0:
 				return State.FALL
+			if Input.is_action_just_pressed("attack") and Input.is_action_pressed("down"):
+				print("down attack second jump")
+				return State.DOWN_ATTACK
 			if Input.is_action_just_pressed("attack"):
 				return State.JUMP_ATTACK
 				
@@ -300,6 +308,9 @@ func get_next_state(state: State) -> int:
 				return State.WALL_JUMP
 			if can_second_jump and jump_request_timer.time_left > 0:
 				return State.SECOND_JUMP
+			if Input.is_action_just_pressed("attack") and Input.is_action_pressed("down"):
+				print("down attack fall")
+				return State.DOWN_ATTACK
 			if Input.is_action_just_pressed("attack"):
 				return State.JUMP_ATTACK
 		
@@ -324,6 +335,11 @@ func get_next_state(state: State) -> int:
 				return State.WALL_SLIDING
 			if velocity.y >= 0:
 				return State.FALL
+			if Input.is_action_just_pressed("attack") and Input.is_action_pressed("down"):
+				print("down attack wall jump")
+				return State.DOWN_ATTACK
+			if Input.is_action_just_pressed("attack"):
+				return State.JUMP_ATTACK
 		
 		State.GROUND_ATTACK:
 			if not animation_player.is_playing():
@@ -333,9 +349,9 @@ func get_next_state(state: State) -> int:
 			if not animation_player.is_playing():
 				return State.FALL
 		#
-		#State.ATTACK_3:
-			#if not animation_player.is_playing():
-				#return State.IDLE
+		State.DOWN_ATTACK:
+			if not animation_player.is_playing():
+				return State.FALL
 		
 		State.HURT:
 			if not animation_player.is_playing():
@@ -422,9 +438,9 @@ func transition_state(from: State, to: State) -> void:
 			#animation_player.play("JUMP_ATTACK")
 			#is_combo_requested = false
 		#
-		#State.ATTACK_3:
-			#animation_player.play("attack_3")
-			#is_combo_requested = false
+		State.DOWN_ATTACK:
+			animation_player.play("down_attack")
+			SoundManager.play_sfx("Attack")
 		
 		State.HURT:
 			animation_player.play("hurt")

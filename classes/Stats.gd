@@ -4,7 +4,7 @@ extends Node
 signal health_changed
 signal energy_changed
 
-@export var max_health: int = 3
+@export var max_health: int = 100
 @export var max_energy: float = 10
 @export var energy_regen: float = 0.8
 
