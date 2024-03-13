@@ -15,8 +15,8 @@ enum State {
 	LANDING,
 	WALL_SLIDING,
 	WALL_JUMP,
-	ATTACK_1,
-	ATTACK_2,
+	GROUND_ATTACK,
+	JUMP_ATTACK,
 	ATTACK_3,
 	HURT,
 	DYING,
@@ -27,7 +27,7 @@ enum State {
 
 const GROUND_STATES := [
 	State.IDLE, State.RUNNING, State.LANDING,
-	State.ATTACK_1, State.ATTACK_2, State.ATTACK_3,
+	State.GROUND_ATTACK,
 ]
 const WALL_STATES := [
 	State.WALL_JUMP, State.WALL_SLIDING
@@ -36,7 +36,7 @@ const RUN_SPEED := 160.0
 const FLOOR_ACCELERATION := RUN_SPEED / 0.2
 const AIR_ACCELERATION := RUN_SPEED / 0.1
 const JUMP_VELOCITY := -320.0
-const WALL_JUMP_VELOCITY := Vector2(380, -280)
+const WALL_JUMP_VELOCITY := Vector2(380, -340)
 const KNOCKBACK_AMOUNT := 512.0
 const SLIDING_DURATION := 0.3
 const SLIDING_SPEED := 256.0
@@ -56,7 +56,7 @@ const TIME_BETWEEN_JUMP_AND_SECOND_JUMP := 0.2
 var default_gravity := ProjectSettings.get("physics/2d/default_gravity") as float
 var wall_slide_gravity := default_gravity / 10
 var is_first_tick := false
-var is_combo_requested := false
+#var is_combo_requested := false
 var pending_damage: Damage
 var fall_from_y: float
 var interacting_with: Array[Interactable]
@@ -97,8 +97,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		if velocity.y < JUMP_VELOCITY / 2:
 			velocity.y = JUMP_VELOCITY / 2
 	
-	if event.is_action_pressed("attack") and can_combo:
-		is_combo_requested = true
+	#if event.is_action_pressed("attack") and can_combo:
+		#is_combo_requested = true
 	
 	if event.is_action_pressed("slide"):
 		slide_request_timer.start()
@@ -152,13 +152,13 @@ func tick_physics(state: State, delta: float) -> void:
 				direction = Direction.LEFT if get_wall_normal().x < 0 else Direction.RIGHT
 			else:
 				move(default_gravity, delta)
-				if not wall_jump_hand_checker.is_colliding() and wall_jump_foot_checker.is_colliding() and wall_jump_wall_edge_acceleration_timer.time_left == 0:
-					wall_jump_wall_edge_acceleration_timer.start()
-					velocity.y += WALL_EDGE_ACCELERATION
 		
-		State.ATTACK_1, State.ATTACK_2, State.ATTACK_3:
+		State.GROUND_ATTACK:
 			stand(default_gravity, delta)
 		
+		State.JUMP_ATTACK:
+			move(default_gravity, delta)
+			
 		State.HURT, State.DYING:
 			stand(default_gravity, delta)
 		
@@ -174,6 +174,8 @@ func tick_physics(state: State, delta: float) -> void:
 func move(gravity: float, delta: float) -> void:
 	var movement := Input.get_axis("move_left", "move_right")
 	var acceleration := FLOOR_ACCELERATION if is_on_floor() else AIR_ACCELERATION
+	if movement * velocity.x < 0:
+		velocity.x = 0
 	velocity.x = move_toward(velocity.x, movement * RUN_SPEED, acceleration * delta)
 	velocity.y += gravity * delta
 	
@@ -187,6 +189,13 @@ func stand(gravity: float, delta: float) -> void:
 	var acceleration := FLOOR_ACCELERATION if is_on_floor() else AIR_ACCELERATION
 	velocity.x = move_toward(velocity.x, 0.0, acceleration * delta)
 	velocity.y += gravity * delta
+	
+	move_and_slide()
+
+
+func stop(gravity: float, delta: float) -> void:
+	velocity.x = 0
+	velocity.y = 0
 	
 	move_and_slide()
 
@@ -250,7 +259,7 @@ func get_next_state(state: State) -> int:
 	match state:
 		State.IDLE:
 			if Input.is_action_just_pressed("attack"):
-				return State.ATTACK_1
+				return State.GROUND_ATTACK
 			if should_slide():
 				return State.SLIDING_START
 			if not is_still:
@@ -258,7 +267,7 @@ func get_next_state(state: State) -> int:
 		
 		State.RUNNING:
 			if Input.is_action_just_pressed("attack"):
-				return State.ATTACK_1
+				return State.GROUND_ATTACK
 			if should_slide():
 				return State.SLIDING_START
 			if is_still:
@@ -271,11 +280,15 @@ func get_next_state(state: State) -> int:
 				return State.SECOND_JUMP
 			if velocity.y >= 0:
 				return State.FALL
+			if Input.is_action_just_pressed("attack"):
+				return State.JUMP_ATTACK
 		
 		State.SECOND_JUMP:
 			can_second_jump = false
 			if velocity.y >= 0:
 				return State.FALL
+			if Input.is_action_just_pressed("attack"):
+				return State.JUMP_ATTACK
 				
 		State.FALL:
 			if is_on_floor():
@@ -287,6 +300,8 @@ func get_next_state(state: State) -> int:
 				return State.WALL_JUMP
 			if can_second_jump and jump_request_timer.time_left > 0:
 				return State.SECOND_JUMP
+			if Input.is_action_just_pressed("attack"):
+				return State.JUMP_ATTACK
 		
 		State.LANDING:
 			if not animation_player.is_playing():
@@ -310,17 +325,17 @@ func get_next_state(state: State) -> int:
 			if velocity.y >= 0:
 				return State.FALL
 		
-		State.ATTACK_1:
-			if not animation_player.is_playing():
-				return State.ATTACK_2 if is_combo_requested else State.IDLE
-		
-		State.ATTACK_2:
-			if not animation_player.is_playing():
-				return State.ATTACK_3 if is_combo_requested else State.IDLE
-		
-		State.ATTACK_3:
+		State.GROUND_ATTACK:
 			if not animation_player.is_playing():
 				return State.IDLE
+		
+		State.JUMP_ATTACK:
+			if not animation_player.is_playing():
+				return State.FALL
+		#
+		#State.ATTACK_3:
+			#if not animation_player.is_playing():
+				#return State.IDLE
 		
 		State.HURT:
 			if not animation_player.is_playing():
@@ -394,18 +409,22 @@ func transition_state(from: State, to: State) -> void:
 			velocity.x *= get_wall_normal().x
 			jump_request_timer.stop()
 		
-		State.ATTACK_1:
+		State.GROUND_ATTACK:
 			animation_player.play("attack_1")
-			is_combo_requested = false
+			#is_combo_requested = false
+			SoundManager.play_sfx("Attack")
+			
+		State.JUMP_ATTACK:
+			animation_player.play("attack_1")
 			SoundManager.play_sfx("Attack")
 		
-		State.ATTACK_2:
-			animation_player.play("attack_2")
-			is_combo_requested = false
-		
-		State.ATTACK_3:
-			animation_player.play("attack_3")
-			is_combo_requested = false
+		#State.JUMP_ATTACK:
+			#animation_player.play("JUMP_ATTACK")
+			#is_combo_requested = false
+		#
+		#State.ATTACK_3:
+			#animation_player.play("attack_3")
+			#is_combo_requested = false
 		
 		State.HURT:
 			animation_player.play("hurt")
