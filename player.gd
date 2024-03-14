@@ -66,6 +66,7 @@ var can_second_jump := false
 
 @onready var slide_jump_coyote_timer: Timer = $SlideJumpCoyoteTimer
 @onready var graphics: Node2D = $Graphics
+
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var coyote_timer: Timer = $CoyoteTimer
 @onready var jump_request_timer: Timer = $JumpRequestTimer
@@ -84,6 +85,8 @@ var can_second_jump := false
 @onready var wall_slide_min_timer: Timer = $WallSlideMinTimer
 @onready var wall_jump_hand_checker: RayCast2D = $Graphics/WallJumpHandChecker
 @onready var wall_jump_foot_checker: RayCast2D = $Graphics/WallJumpFootChecker
+@onready var knight_animation_player: AnimationPlayer = $KnightAnimationPlayer
+
 
 
 func _ready() -> void:
@@ -315,7 +318,7 @@ func get_next_state(state: State) -> int:
 				return State.JUMP_ATTACK
 		
 		State.LANDING:
-			if not animation_player.is_playing():
+			if not knight_animation_player.is_playing():
 				return State.IDLE
 		
 		State.WALL_SLIDING:
@@ -342,27 +345,27 @@ func get_next_state(state: State) -> int:
 				return State.JUMP_ATTACK
 		
 		State.GROUND_ATTACK:
-			if not animation_player.is_playing():
+			if not knight_animation_player.is_playing():
 				return State.IDLE
 		
 		State.JUMP_ATTACK:
-			if not animation_player.is_playing():
+			if not knight_animation_player.is_playing():
 				return State.FALL
 		#
 		State.DOWN_ATTACK:
-			if not animation_player.is_playing():
+			if not knight_animation_player.is_playing():
 				return State.FALL
 		
 		State.HURT:
-			if not animation_player.is_playing():
+			if not knight_animation_player.is_playing():
 				return State.IDLE
 		
 		State.SLIDING_START:
-			if not animation_player.is_playing():
+			if not knight_animation_player.is_playing():
 				return State.SLIDING_LOOP
 		
 		State.SLIDING_END:
-			if not animation_player.is_playing():
+			if not knight_animation_player.is_playing():
 				return State.IDLE
 		
 		State.SLIDING_LOOP:
@@ -384,26 +387,26 @@ func transition_state(from: State, to: State) -> void:
 	
 	match to:
 		State.IDLE:
-			animation_player.play("idle")
+			knight_animation_player.play("idle")
 		
 		State.RUNNING:
-			animation_player.play("running")
+			knight_animation_player.play("running")
 		
 		State.JUMP:
-			animation_player.play("jump")
+			knight_animation_player.play("jump")
 			velocity.y = JUMP_VELOCITY
 			coyote_timer.stop()
 			jump_request_timer.stop()
 			SoundManager.play_sfx("Jump")
 		
 		State.SECOND_JUMP:
-			animation_player.play("jump")
+			knight_animation_player.play("second_jump")
 			velocity.y = JUMP_VELOCITY
 			jump_request_timer.stop()
 			SoundManager.play_sfx("Jump")
 		
 		State.FALL:
-			animation_player.play("fall")
+			knight_animation_player.play("fall")
 			if from in GROUND_STATES:
 				coyote_timer.start()
 			if from == State.WALL_SLIDING:
@@ -411,27 +414,27 @@ func transition_state(from: State, to: State) -> void:
 			fall_from_y = global_position.y
 		
 		State.LANDING:
-			animation_player.play("landing")
+			knight_animation_player.play("landing")
 		
 		State.WALL_SLIDING:
 			velocity.y = 0
-			animation_player.play("wall_sliding")
+			knight_animation_player.play("wall_sliding")
 			if from != State.WALL_SLIDING:
 				wall_slide_min_timer.start()
 		
 		State.WALL_JUMP:
-			animation_player.play("jump")
+			knight_animation_player.play("jump")
 			velocity = WALL_JUMP_VELOCITY
 			velocity.x *= get_wall_normal().x
 			jump_request_timer.stop()
 		
 		State.GROUND_ATTACK:
-			animation_player.play("attack_1")
+			knight_animation_player.play("attack_1")
 			#is_combo_requested = false
 			SoundManager.play_sfx("Attack")
 			
 		State.JUMP_ATTACK:
-			animation_player.play("attack_1")
+			knight_animation_player.play("attack_1")
 			SoundManager.play_sfx("Attack")
 		
 		#State.JUMP_ATTACK:
@@ -439,11 +442,11 @@ func transition_state(from: State, to: State) -> void:
 			#is_combo_requested = false
 		#
 		State.DOWN_ATTACK:
-			animation_player.play("down_attack")
+			knight_animation_player.play("down_attack")
 			SoundManager.play_sfx("Attack")
 		
 		State.HURT:
-			animation_player.play("hurt")
+			knight_animation_player.play("hurt")
 			
 			stats.health -= pending_damage.amount
 			
@@ -454,20 +457,20 @@ func transition_state(from: State, to: State) -> void:
 			invincible_timer.start()
 		
 		State.DYING:
-			animation_player.play("die")
+			knight_animation_player.play("die")
 			invincible_timer.stop()
 			interacting_with.clear()
 		
 		State.SLIDING_START:
-			animation_player.play("sliding_start")
+			knight_animation_player.play("sliding_start")
 			slide_request_timer.stop()
 			stats.energy -= SLIDING_ENERGY
 		
 		State.SLIDING_LOOP:
-			animation_player.play("sliding_loop")
+			knight_animation_player.play("sliding_loop")
 		
 		State.SLIDING_END:
-			animation_player.play("sliding_end")
+			knight_animation_player.play("sliding_end")
 	
 	is_first_tick = true
 
