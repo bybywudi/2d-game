@@ -5,7 +5,7 @@ extends Control
 
 func _ready() -> void:
 	hide()
-	SoundManager.setup_ui_sounds(self)
+	#SoundManager.setup_ui_sounds(self)
 	
 	visibility_changed.connect(func ():
 		get_tree().paused = visible

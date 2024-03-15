@@ -8,9 +8,13 @@ enum Bus { MASTER, SFX, BGM }
 
 func play_sfx(name: String) -> void:
 	var player := sfx.get_node(name) as AudioStreamPlayer
-	if not player:
-		return
+	#if not player:
+		#return
 	player.play()
+
+func stop_play_sfx(name: String) -> void:
+	var player := sfx.get_node(name) as AudioStreamPlayer
+	player.stop()
 
 
 func play_bgm(stream: AudioStream) -> void:

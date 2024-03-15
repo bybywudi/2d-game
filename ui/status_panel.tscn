@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://bgwkfcw43ryl8"]
 
 [ext_resource type="Script" path="res://ui/status_panel.gd" id="1_2bto7"]
-[ext_resource type="Texture2D" uid="uid://dddof00xq1dpo" path="res://assets/legacy_fantasy/HUD.png" id="1_mkinl"]
+[ext_resource type="Texture2D" uid="uid://dddof00xq1dpo" path="res://assets/legacy_fantasy/forest/HUD.png" id="1_mkinl"]
 [ext_resource type="Texture2D" uid="uid://dg2rvq5qp11a2" path="res://assets/generic_char/char_blue_1.png" id="2_t8w8b"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ja77a"]

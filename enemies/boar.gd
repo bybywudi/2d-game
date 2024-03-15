@@ -95,6 +95,7 @@ func transition_state(from: State, to: State) -> void:
 		
 		State.HURT:
 			animation_player.play("hit")
+			SoundManager.play_sfx("EnemyAttacked")
 			
 			stats.health -= pending_damage.amount
 			

@@ -10,8 +10,8 @@ func _ready() -> void:
 	
 	new_game.grab_focus()
 	
-	SoundManager.setup_ui_sounds(self)
-	SoundManager.play_bgm(preload("res://assets/bgm/02 1 titles LOOP.mp3"))
+	#SoundManager.setup_ui_sounds(self)
+	#SoundManager.play_bgm(preload("res://assets/bgm/02 1 titles LOOP.mp3"))
 
 
 func _on_new_game_pressed() -> void:

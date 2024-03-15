@@ -1,7 +1,7 @@
 [gd_resource type="TileSet" load_steps=5 format=3 uid="uid://dwpv7qqs1uq8f"]
 
-[ext_resource type="Texture2D" uid="uid://mp1ebc7vgi6r" path="res://assets/legacy_fantasy/Trees/Tree-Assets.png" id="1_48go5"]
-[ext_resource type="Texture2D" uid="uid://1i3wjx38cgvw" path="res://assets/legacy_fantasy/Tiles.png" id="2_p8dhe"]
+[ext_resource type="Texture2D" uid="uid://mp1ebc7vgi6r" path="res://assets/legacy_fantasy/forest/Trees/Tree-Assets.png" id="1_48go5"]
+[ext_resource type="Texture2D" uid="uid://1i3wjx38cgvw" path="res://assets/legacy_fantasy/forest/Tiles.png" id="2_p8dhe"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6qtcm"]
 texture = ExtResource("1_48go5")

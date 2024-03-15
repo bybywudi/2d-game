@@ -1,6 +1,6 @@
 [gd_resource type="Theme" load_steps=10 format=3 uid="uid://cwh4n2abu7aub"]
 
-[ext_resource type="Texture2D" uid="uid://dddof00xq1dpo" path="res://assets/legacy_fantasy/HUD.png" id="1_0ih2v"]
+[ext_resource type="Texture2D" uid="uid://dddof00xq1dpo" path="res://assets/legacy_fantasy/forest/HUD.png" id="1_0ih2v"]
 [ext_resource type="FontFile" uid="uid://d1x2hj2xonver" path="res://assets/SmileySans-Oblique.otf" id="1_mvpav"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_noa5d"]

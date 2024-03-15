@@ -1,10 +1,19 @@
-[gd_scene load_steps=6 format=3 uid="uid://6das04jxc821"]
+[gd_scene load_steps=15 format=3 uid="uid://6das04jxc821"]
 
 [ext_resource type="AudioStream" uid="uid://sids465to5lu" path="res://assets/sfx/07_human_atk_sword_1.ogg" id="1_vlbpa"]
 [ext_resource type="Script" path="res://globals/sound_manager.gd" id="1_wlomb"]
-[ext_resource type="AudioStream" uid="uid://cq5rw38fi3r8p" path="res://assets/sfx/12_human_jump_3.ogg" id="2_vjd50"]
+[ext_resource type="AudioStream" uid="uid://c7k263okns0p5" path="res://assets/sfx/EnermyDamageAudio.wav" id="3_0njh6"]
 [ext_resource type="AudioStream" uid="uid://dqq3y8e0yrvjf" path="res://assets/sfx/impactGlass_heavy_004.ogg" id="4_3te1s"]
+[ext_resource type="AudioStream" uid="uid://5sqlv2wwo3ut" path="res://assets/sfx/PlayerJump.wav" id="4_cefx8"]
 [ext_resource type="AudioStream" uid="uid://c006rsldccc0t" path="res://assets/sfx/impactTin_medium_004.ogg" id="5_mjv1p"]
+[ext_resource type="AudioStream" uid="uid://s6ro2pcdaups" path="res://assets/sfx/PlayerRun.wav" id="5_s4q1c"]
+[ext_resource type="Script" path="res://globals/Run.gd" id="6_1at67"]
+[ext_resource type="AudioStream" uid="uid://brgjkgyx373oo" path="res://assets/sfx/PlayerWallSlide.wav" id="6_jcog8"]
+[ext_resource type="AudioStream" uid="uid://bys5uokxu815r" path="res://assets/sfx/PlayerWallJump.wav" id="7_aihwh"]
+[ext_resource type="AudioStream" uid="uid://ch485ra0n0abp" path="res://assets/sfx/PlayerFalling.wav" id="8_xcytg"]
+[ext_resource type="AudioStream" uid="uid://ddvbfiypn8tka" path="res://assets/sfx/PlayerSoftLand.wav" id="9_4u8nt"]
+[ext_resource type="AudioStream" uid="uid://bnq5httd3fwji" path="res://assets/sfx/PlayerHardLand.wav" id="10_joysa"]
+[ext_resource type="AudioStream" uid="uid://vfy8q3u87fpo" path="res://assets/sfx/PlayerInjured.wav" id="11_tiois"]
 
 [node name="SoundManager" type="Node"]
 process_mode = 3
@@ -14,10 +23,45 @@ script = ExtResource("1_wlomb")
 
 [node name="Attack" type="AudioStreamPlayer" parent="SFX"]
 stream = ExtResource("1_vlbpa")
+volume_db = -3.747
+bus = &"SFX"
+
+[node name="EnemyAttacked" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("3_0njh6")
 bus = &"SFX"
 
 [node name="Jump" type="AudioStreamPlayer" parent="SFX"]
-stream = ExtResource("2_vjd50")
+stream = ExtResource("4_cefx8")
+bus = &"SFX"
+
+[node name="Run" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("5_s4q1c")
+bus = &"SFX"
+script = ExtResource("6_1at67")
+
+[node name="WallSliding" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("6_jcog8")
+volume_db = 2.811
+bus = &"SFX"
+
+[node name="WallJump" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("7_aihwh")
+bus = &"SFX"
+
+[node name="Falling" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("8_xcytg")
+bus = &"SFX"
+
+[node name="SoftLand" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("9_4u8nt")
+bus = &"SFX"
+
+[node name="HardLand" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("10_joysa")
+bus = &"SFX"
+
+[node name="Injured" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("11_tiois")
 bus = &"SFX"
 
 [node name="UIPress" type="AudioStreamPlayer" parent="SFX"]
@@ -30,3 +74,5 @@ bus = &"SFX"
 
 [node name="BGMPlayer" type="AudioStreamPlayer" parent="."]
 bus = &"BGM"
+
+[connection signal="finished" from="SFX/Run" to="SFX/Run" method="_on_music_finished"]

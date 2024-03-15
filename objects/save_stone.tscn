@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://btn7p3ng6glfl"]
 
 [ext_resource type="Script" path="res://objects/save_stone.gd" id="1_flotg"]
-[ext_resource type="Texture2D" uid="uid://dr6002mnejkho" path="res://assets/legacy_fantasy/Props-Rocks.png" id="2_48b01"]
+[ext_resource type="Texture2D" uid="uid://dr6002mnejkho" path="res://assets/legacy_fantasy/forest/Props-Rocks.png" id="2_48b01"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nbm8j"]
 size = Vector2(46, 37)

@@ -19,7 +19,8 @@ func _ready() -> void:
 	camera_2d.reset_smoothing()
 	
 	if bgm:
-		SoundManager.play_bgm(bgm)
+		pass
+		#SoundManager.play_bgm(bgm)
 
 
 func update_player(pos: Vector2, direction: Player.Direction) -> void:

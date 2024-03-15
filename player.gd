@@ -217,6 +217,14 @@ func slide(delta: float) -> void:
 
 func die() -> void:
 	game_over_screen.show_game_over()
+	
+
+func play_sound(name: String) -> void:
+	SoundManager.play_sfx(name)
+	
+func stop_play_sound_if_animation_stoped(name: String, animation_name: String) -> void:
+	if knight_animation_player.current_animation != animation_name:
+		SoundManager.stop_play_sfx(name)
 
 
 func register_interactable(v: Interactable) -> void:
@@ -257,7 +265,6 @@ func get_next_state(state: State) -> int:
 	if should_jump:
 		return State.JUMP
 		
-	
 	if state in GROUND_STATES and not is_on_floor():
 		return State.FALL
 	
@@ -385,15 +392,25 @@ func transition_state(from: State, to: State) -> void:
 		#State.keys()[to],
 	#])
 	
+	if from == State.RUNNING and to != State.RUNNING:
+		SoundManager.stop_play_sfx("Run")
+	
+	if from == State.WALL_SLIDING and to != State.WALL_SLIDING:
+		SoundManager.stop_play_sfx("WallSliding")
+		
 	if from not in GROUND_STATES and to in GROUND_STATES:
 		coyote_timer.stop()
+		
 	
 	match to:
 		State.IDLE:
 			knight_animation_player.play("idle")
 		
 		State.RUNNING:
+			if from == State.FALL:
+				SoundManager.play_sfx("SoftLand")
 			knight_animation_player.play("running")
+			SoundManager.play_sfx("Run")
 		
 		State.JUMP:
 			knight_animation_player.play("jump")
@@ -420,6 +437,7 @@ func transition_state(from: State, to: State) -> void:
 			knight_animation_player.play("landing")
 		
 		State.WALL_SLIDING:
+			SoundManager.play_sfx("WallSliding")
 			velocity.y = 0
 			knight_animation_player.play("wall_sliding")
 			if from != State.WALL_SLIDING:
@@ -430,6 +448,7 @@ func transition_state(from: State, to: State) -> void:
 			velocity = WALL_JUMP_VELOCITY
 			velocity.x *= get_wall_normal().x
 			jump_request_timer.stop()
+			SoundManager.play_sfx("WallJump")
 		
 		State.GROUND_ATTACK:
 			knight_animation_player.play("attack_1")
@@ -453,14 +472,12 @@ func transition_state(from: State, to: State) -> void:
 		
 		State.HURT:
 			knight_animation_player.play("hurt")
-			
 			stats.health -= pending_damage.amount
-			
 			var dir := pending_damage.source.global_position.direction_to(global_position)
 			velocity = dir * KNOCKBACK_AMOUNT
-			
 			pending_damage = null
 			invincible_timer.start()
+			SoundManager.play_sfx("Injured")
 		
 		State.DYING:
 			knight_animation_player.play("die")
