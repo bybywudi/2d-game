@@ -86,6 +86,9 @@ var can_second_jump := false
 @onready var wall_jump_hand_checker: RayCast2D = $Graphics/WallJumpHandChecker
 @onready var wall_jump_foot_checker: RayCast2D = $Graphics/WallJumpFootChecker
 @onready var knight_animation_player: AnimationPlayer = $KnightAnimationPlayer
+@onready var attack_1_player: AnimationPlayer = $Attack1Player
+@onready var down_attack_player: AnimationPlayer = $DownAttackPlayer
+@onready var up_attack_player: AnimationPlayer = $UpAttackPlayer
 
 
 
@@ -430,11 +433,13 @@ func transition_state(from: State, to: State) -> void:
 		
 		State.GROUND_ATTACK:
 			knight_animation_player.play("attack_1")
+			attack_1_player.play("attack_1")
 			#is_combo_requested = false
 			SoundManager.play_sfx("Attack")
 			
 		State.JUMP_ATTACK:
 			knight_animation_player.play("attack_1")
+			attack_1_player.play("attack_1")
 			SoundManager.play_sfx("Attack")
 		
 		#State.JUMP_ATTACK:
@@ -443,6 +448,7 @@ func transition_state(from: State, to: State) -> void:
 		#
 		State.DOWN_ATTACK:
 			knight_animation_player.play("down_attack")
+			down_attack_player.play("down_attack")
 			SoundManager.play_sfx("Attack")
 		
 		State.HURT:

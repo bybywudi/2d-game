@@ -1,4 +1,4 @@
-[gd_scene load_steps=110 format=3 uid="uid://d08n7x2g8jvfe"]
+[gd_scene load_steps=137 format=3 uid="uid://d08n7x2g8jvfe"]
 
 [ext_resource type="Texture2D" uid="uid://dg2rvq5qp11a2" path="res://assets/generic_char/char_blue_1.png" id="1_7ylvt"]
 [ext_resource type="Script" path="res://player.gd" id="1_vlv3c"]
@@ -70,18 +70,36 @@
 [ext_resource type="Texture2D" uid="uid://lem3jpe4qmuq" path="res://assets/generic_char/knight/SlideWall/Slide/Slide_1.PNG" id="62_alaps"]
 [ext_resource type="Texture2D" uid="uid://dagueynfwgdsa" path="res://assets/generic_char/knight/SlideWall/Slide/Slide_2.PNG" id="63_a2xls"]
 [ext_resource type="Texture2D" uid="uid://1vvf2lx41x71" path="res://assets/generic_char/knight/SlideWall/Slide/Slide_3.PNG" id="64_fseao"]
+[ext_resource type="Texture2D" uid="uid://bb5k28r3r3n2t" path="res://assets/generic_char/knight/slash_effect_alt/SlashEffectAlt_000.png" id="65_36pdr"]
+[ext_resource type="Texture2D" uid="uid://vkgh222myboo" path="res://assets/generic_char/knight/slash_effect_alt/SlashEffectAlt_001.png" id="66_yj3ph"]
+[ext_resource type="Texture2D" uid="uid://d1hoyu4fvaje3" path="res://assets/generic_char/knight/slash_effect_alt/SlashEffectAlt_002.png" id="67_i4id5"]
+[ext_resource type="Texture2D" uid="uid://ce3oeo2u43g3m" path="res://assets/generic_char/knight/slash_effect_alt/SlashEffectAlt_003.png" id="68_hr841"]
+[ext_resource type="Texture2D" uid="uid://drjhoma5nnove" path="res://assets/generic_char/knight/slash_effect_alt/SlashEffectAlt_004.png" id="69_w48kl"]
+[ext_resource type="Texture2D" uid="uid://dkbc7vnk3ror2" path="res://assets/generic_char/knight/slash_effect_alt/SlashEffectAlt_005.png" id="70_qpyp1"]
+[ext_resource type="Texture2D" uid="uid://dhlp0qi1v7c10" path="res://assets/generic_char/knight/slash_down_effect/DownSlashEffect_000.png" id="71_eap3g"]
+[ext_resource type="Texture2D" uid="uid://d3ymwkrl2qv4i" path="res://assets/generic_char/knight/slash_down_effect/DownSlashEffect_001.png" id="72_4cjue"]
+[ext_resource type="Texture2D" uid="uid://i78av2k6iega" path="res://assets/generic_char/knight/slash_down_effect/DownSlashEffect_002.png" id="73_ofx3y"]
+[ext_resource type="Texture2D" uid="uid://ci85dl2inn10a" path="res://assets/generic_char/knight/slash_down_effect/DownSlashEffect_003.png" id="74_c20et"]
+[ext_resource type="Texture2D" uid="uid://bwg1cxx540dga" path="res://assets/generic_char/knight/slash_down_effect/DownSlashEffect_004.png" id="75_xp243"]
+[ext_resource type="Texture2D" uid="uid://c2ehmun6uhs7m" path="res://assets/generic_char/knight/slash_down_effect/DownSlashEffect_005.png" id="76_rvgf1"]
+[ext_resource type="Texture2D" uid="uid://6dcd3sbwvgbn" path="res://assets/generic_char/knight/slash_effect_up/UpSlashEffect_000.png" id="77_f5x1i"]
+[ext_resource type="Texture2D" uid="uid://bfotp3cjofqej" path="res://assets/generic_char/knight/slash_effect_up/UpSlashEffect_001.png" id="78_htuy2"]
+[ext_resource type="Texture2D" uid="uid://bo2keiglg6stb" path="res://assets/generic_char/knight/slash_effect_up/UpSlashEffect_002.png" id="79_p8emq"]
+[ext_resource type="Texture2D" uid="uid://ctbpcge7316k6" path="res://assets/generic_char/knight/slash_effect_up/UpSlashEffect_003.png" id="80_shpn7"]
+[ext_resource type="Texture2D" uid="uid://cniidj06wfx5c" path="res://assets/generic_char/knight/slash_effect_up/UpSlashEffect_004.png" id="81_j6r5c"]
+[ext_resource type="Texture2D" uid="uid://ck67whgtmi0hk" path="res://assets/generic_char/knight/slash_effect_up/UpSlashEffect_005.png" id="82_0be3k"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vniip"]
 size = Vector2(12, 28)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tx2ep"]
-size = Vector2(19, 11)
+size = Vector2(27.5, 14.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mjb17"]
-size = Vector2(21, 50.5)
+size = Vector2(23, 29)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vji8o"]
-size = Vector2(22.5, 12)
+size = Vector2(23, 27)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5ct13"]
 animations = [{
@@ -314,80 +332,93 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_dbnco"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("65_36pdr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("66_yj3ph")
+}, {
+"duration": 1.0,
+"texture": ExtResource("67_i4id5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("68_hr841")
+}, {
+"duration": 1.0,
+"texture": ExtResource("69_w48kl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("70_qpyp1")
+}],
+"loop": true,
+"name": &"attack_1",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nfl0b"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("71_eap3g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("72_4cjue")
+}, {
+"duration": 1.0,
+"texture": ExtResource("73_ofx3y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("74_c20et")
+}, {
+"duration": 1.0,
+"texture": ExtResource("75_xp243")
+}, {
+"duration": 1.0,
+"texture": ExtResource("76_rvgf1")
+}],
+"loop": true,
+"name": &"down_attack",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_a0ccw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("77_f5x1i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("78_htuy2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("79_p8emq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("80_shpn7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("81_j6r5c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("82_0be3k")
+}],
+"loop": true,
+"name": &"up_attack",
+"speed": 5.0
+}]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1t4ma"]
 size = Vector2(10, 28)
-
-[sub_resource type="Animation" id="Animation_dwqdb"]
-resource_name = "idle"
-length = 0.9
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, -22)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:sprite_frames")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [SubResource("SpriteFrames_5ct13")]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:animation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"idle"]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:frame")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6, 7, 8]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:flip_h")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
 
 [sub_resource type="Animation" id="Animation_ke3c8"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:position")
+tracks/0/path = NodePath("Graphics/KnightGraphics/Knight:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -399,7 +430,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:sprite_frames")
+tracks/1/path = NodePath("Graphics/KnightGraphics/Knight:sprite_frames")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -411,7 +442,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:animation")
+tracks/2/path = NodePath("Graphics/KnightGraphics/Knight:animation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -423,7 +454,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:frame")
+tracks/3/path = NodePath("Graphics/KnightGraphics/Knight:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -435,7 +466,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:flip_h")
+tracks/4/path = NodePath("Graphics/KnightGraphics/Knight:flip_h")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -444,14 +475,27 @@ tracks/4/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Graphics/Hurtbox:monitorable")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
-[sub_resource type="Animation" id="Animation_x7noc"]
-resource_name = "jump"
-length = 0.5
+[sub_resource type="Animation" id="Animation_k7t41"]
+resource_name = "attack_1"
+length = 0.3
+step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:position")
+tracks/0/path = NodePath("Graphics/KnightGraphics/Knight:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -463,7 +507,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:sprite_frames")
+tracks/1/path = NodePath("Graphics/KnightGraphics/Knight:sprite_frames")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -475,34 +519,123 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:animation")
+tracks/2/path = NodePath("Graphics/KnightGraphics/Knight:animation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"jump"]
+"values": [&"attack_1"]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:frame")
+tracks/3/path = NodePath("Graphics/KnightGraphics/Knight:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2, 3, 4]
+"values": [0, 1, 2, 3, 4, 5]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:flip_h")
+tracks/4/path = NodePath("Graphics/KnightGraphics/Knight:flip_h")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Graphics/Hurtbox:monitorable")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_36jt0"]
+resource_name = "down_attack"
+length = 0.3
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Graphics/KnightGraphics/Knight:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -22)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Graphics/KnightGraphics/Knight:sprite_frames")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("SpriteFrames_5ct13")]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Graphics/KnightGraphics/Knight:animation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"down_attack"]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Graphics/KnightGraphics/Knight:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Graphics/KnightGraphics/Knight:flip_h")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Graphics/Hurtbox:monitorable")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -516,7 +649,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:position")
+tracks/0/path = NodePath("Graphics/KnightGraphics/Knight:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -528,7 +661,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:sprite_frames")
+tracks/1/path = NodePath("Graphics/KnightGraphics/Knight:sprite_frames")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -540,7 +673,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:animation")
+tracks/2/path = NodePath("Graphics/KnightGraphics/Knight:animation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -552,7 +685,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:frame")
+tracks/3/path = NodePath("Graphics/KnightGraphics/Knight:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -564,10 +697,251 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:flip_h")
+tracks/4/path = NodePath("Graphics/KnightGraphics/Knight:flip_h")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Graphics/Hurtbox:monitorable")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_5ytya"]
+resource_name = "hurt"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Graphics/KnightGraphics/Knight:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -22)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Graphics/KnightGraphics/Knight:sprite_frames")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("SpriteFrames_5ct13")]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Graphics/KnightGraphics/Knight:animation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"hurt"]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Graphics/KnightGraphics/Knight:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Graphics/KnightGraphics/Knight:flip_h")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Graphics/Hurtbox:monitorable")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_dwqdb"]
+resource_name = "idle"
+length = 0.9
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Graphics/KnightGraphics/Knight:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -22)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Graphics/KnightGraphics/Knight:sprite_frames")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("SpriteFrames_5ct13")]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Graphics/KnightGraphics/Knight:animation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle"]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Graphics/KnightGraphics/Knight:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Graphics/KnightGraphics/Knight:flip_h")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Graphics/Hurtbox:monitorable")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_x7noc"]
+resource_name = "jump"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Graphics/KnightGraphics/Knight:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -22)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Graphics/KnightGraphics/Knight:sprite_frames")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("SpriteFrames_5ct13")]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Graphics/KnightGraphics/Knight:animation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"jump"]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Graphics/KnightGraphics/Knight:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Graphics/KnightGraphics/Knight:flip_h")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Graphics/Hurtbox:monitorable")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -581,7 +955,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:position")
+tracks/0/path = NodePath("Graphics/KnightGraphics/Knight:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -593,7 +967,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:sprite_frames")
+tracks/1/path = NodePath("Graphics/KnightGraphics/Knight:sprite_frames")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -605,7 +979,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:animation")
+tracks/2/path = NodePath("Graphics/KnightGraphics/Knight:animation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -617,7 +991,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:frame")
+tracks/3/path = NodePath("Graphics/KnightGraphics/Knight:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -629,7 +1003,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:flip_h")
+tracks/4/path = NodePath("Graphics/KnightGraphics/Knight:flip_h")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -638,193 +1012,13 @@ tracks/4/keys = {
 "update": 1,
 "values": [true]
 }
-
-[sub_resource type="Animation" id="Animation_5ytya"]
-resource_name = "hurt"
-length = 0.8
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, -22)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:sprite_frames")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [SubResource("SpriteFrames_5ct13")]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:animation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"hurt"]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:frame")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6, 7]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:flip_h")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(1),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
-[sub_resource type="Animation" id="Animation_k7t41"]
-resource_name = "attack_1"
-length = 0.6
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, -22)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:sprite_frames")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [SubResource("SpriteFrames_5ct13")]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:animation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"attack_1"]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:frame")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:flip_h")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
-[sub_resource type="Animation" id="Animation_36jt0"]
-resource_name = "down_attack"
-length = 0.6
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, -22)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:sprite_frames")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [SubResource("SpriteFrames_5ct13")]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:animation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"down_attack"]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:frame")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:flip_h")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Graphics/Hurtbox:monitorable")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -837,7 +1031,7 @@ length = 0.4
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:position")
+tracks/0/path = NodePath("Graphics/KnightGraphics/Knight:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -849,7 +1043,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:sprite_frames")
+tracks/1/path = NodePath("Graphics/KnightGraphics/Knight:sprite_frames")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -861,7 +1055,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:animation")
+tracks/2/path = NodePath("Graphics/KnightGraphics/Knight:animation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -873,7 +1067,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:frame")
+tracks/3/path = NodePath("Graphics/KnightGraphics/Knight:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -885,10 +1079,22 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:flip_h")
+tracks/4/path = NodePath("Graphics/KnightGraphics/Knight:flip_h")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Graphics/Hurtbox:monitorable")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -902,7 +1108,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:position")
+tracks/0/path = NodePath("Graphics/KnightGraphics/Knight:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -914,7 +1120,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:sprite_frames")
+tracks/1/path = NodePath("Graphics/KnightGraphics/Knight:sprite_frames")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -926,7 +1132,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:animation")
+tracks/2/path = NodePath("Graphics/KnightGraphics/Knight:animation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -938,7 +1144,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:frame")
+tracks/3/path = NodePath("Graphics/KnightGraphics/Knight:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -950,7 +1156,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Graphics/KnightGraphics/AnimatedSprite2D:flip_h")
+tracks/4/path = NodePath("Graphics/KnightGraphics/Knight:flip_h")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -958,6 +1164,18 @@ tracks/4/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Graphics/Hurtbox:monitorable")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_h1cni"]
@@ -972,6 +1190,322 @@ _data = {
 "running": SubResource("Animation_t27g0"),
 "second_jump": SubResource("Animation_0ylmq"),
 "wall_sliding": SubResource("Animation_k4rg0")
+}
+
+[sub_resource type="Animation" id="Animation_bbjhh"]
+resource_name = "attack_1"
+length = 0.3
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Graphics/KnightGraphics/Attack1Effect:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(10, -15)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Graphics/KnightGraphics/Attack1Effect:sprite_frames")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("SpriteFrames_dbnco")]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Graphics/KnightGraphics/Attack1Effect:animation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"attack_1"]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Graphics/KnightGraphics/Attack1Effect:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [1, 2, 3, 4, 5, 0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Graphics/KnightGraphics/Attack1Effect:flip_h")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Graphics/Hitbox/AttackShape:disabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+
+[sub_resource type="Animation" id="Animation_d6qnf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Graphics/KnightGraphics/Attack1Effect:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(10, -15)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Graphics/KnightGraphics/Attack1Effect:sprite_frames")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("SpriteFrames_dbnco")]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Graphics/KnightGraphics/Attack1Effect:animation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"attack_1"]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Graphics/KnightGraphics/Attack1Effect:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Graphics/KnightGraphics/Attack1Effect:flip_h")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Graphics/Hitbox/AttackShape:disabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lcaqr"]
+_data = {
+"RESET": SubResource("Animation_d6qnf"),
+"attack_1": SubResource("Animation_bbjhh")
+}
+
+[sub_resource type="Animation" id="Animation_wvldk"]
+resource_name = "down_attack"
+length = 0.3
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Graphics/KnightGraphics/DownAttackEffect:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 15)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Graphics/KnightGraphics/DownAttackEffect:sprite_frames")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("SpriteFrames_nfl0b")]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Graphics/KnightGraphics/DownAttackEffect:animation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"down_attack"]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Graphics/KnightGraphics/DownAttackEffect:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 2, 3, 4, 5, 1]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Graphics/KnightGraphics/DownAttackEffect:flip_h")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Graphics/Hitbox/AttackShape2:disabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+
+[sub_resource type="Animation" id="Animation_wbaho"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Graphics/KnightGraphics/DownAttackEffect:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 15)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Graphics/KnightGraphics/DownAttackEffect:sprite_frames")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("SpriteFrames_nfl0b")]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Graphics/KnightGraphics/DownAttackEffect:animation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"down_attack"]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Graphics/KnightGraphics/DownAttackEffect:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Graphics/KnightGraphics/DownAttackEffect:flip_h")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Graphics/Hitbox/AttackShape2:disabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_otxgr"]
+_data = {
+"RESET": SubResource("Animation_wbaho"),
+"down_attack": SubResource("Animation_wvldk")
 }
 
 [sub_resource type="Animation" id="Animation_3bj6t"]
@@ -3469,27 +4003,48 @@ collision_mask = 16
 script = ExtResource("4_ksant")
 
 [node name="AttackShape" type="CollisionShape2D" parent="Graphics/Hitbox"]
-position = Vector2(16.5, -19.5)
+position = Vector2(20, -12)
 shape = SubResource("RectangleShape2D_tx2ep")
 disabled = true
 
 [node name="AttackShape2" type="CollisionShape2D" parent="Graphics/Hitbox"]
-position = Vector2(-1.5, 17.75)
+position = Vector2(0.5, 14.5)
 shape = SubResource("RectangleShape2D_mjb17")
 disabled = true
 
 [node name="AttackShape3" type="CollisionShape2D" parent="Graphics/Hitbox"]
-position = Vector2(-1.25, -36)
+position = Vector2(0.5, -42.5)
 shape = SubResource("RectangleShape2D_vji8o")
 disabled = true
 
 [node name="KnightGraphics" type="Node2D" parent="Graphics"]
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Graphics/KnightGraphics"]
+[node name="Knight" type="AnimatedSprite2D" parent="Graphics/KnightGraphics"]
 position = Vector2(0, -22)
 scale = Vector2(0.20702, 0.228495)
 sprite_frames = SubResource("SpriteFrames_5ct13")
 animation = &"idle"
+flip_h = true
+
+[node name="Attack1Effect" type="AnimatedSprite2D" parent="Graphics/KnightGraphics"]
+position = Vector2(10, -15)
+scale = Vector2(0.15, 0.15)
+sprite_frames = SubResource("SpriteFrames_dbnco")
+animation = &"attack_1"
+flip_h = true
+
+[node name="DownAttackEffect" type="AnimatedSprite2D" parent="Graphics/KnightGraphics"]
+position = Vector2(0, 15)
+scale = Vector2(0.15, 0.15)
+sprite_frames = SubResource("SpriteFrames_nfl0b")
+animation = &"down_attack"
+flip_h = true
+
+[node name="UpAttackEffect" type="AnimatedSprite2D" parent="Graphics/KnightGraphics"]
+position = Vector2(0, -43)
+scale = Vector2(0.15, 0.15)
+sprite_frames = SubResource("SpriteFrames_a0ccw")
+animation = &"up_attack"
 flip_h = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -3500,6 +4055,18 @@ shape = SubResource("RectangleShape2D_1t4ma")
 libraries = {
 "": SubResource("AnimationLibrary_h1cni")
 }
+
+[node name="Attack1Player" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_lcaqr")
+}
+
+[node name="DownAttackPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_otxgr")
+}
+
+[node name="UpAttackPlayer" type="AnimationPlayer" parent="."]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 deterministic = true
