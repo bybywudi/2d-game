@@ -8,7 +8,7 @@ enum State {
 	DYING,
 }
 
-const KNOCKBACK_AMOUNT := 512.0
+const KNOCKBACK_AMOUNT := 256.0
 
 var pending_damage: Damage
 
@@ -98,7 +98,7 @@ func transition_state(from: State, to: State) -> void:
 			SoundManager.play_sfx("EnemyAttacked")
 			
 			stats.health -= pending_damage.amount
-			
+
 			var dir := pending_damage.source.global_position.direction_to(global_position)
 			velocity = dir * KNOCKBACK_AMOUNT
 			

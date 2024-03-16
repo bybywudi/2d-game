@@ -14,7 +14,7 @@ signal died
 		if not is_node_ready():
 			await ready
 		graphics.scale.x = -direction
-@export var max_speed: float = 180
+@export var max_speed: float = 0
 @export var acceleration: float = 2000
 
 var default_gravity := ProjectSettings.get("physics/2d/default_gravity") as float

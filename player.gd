@@ -22,6 +22,7 @@ enum State {
 	UP_ATTACK,
 	HURT,
 	DYING,
+	DASH,
 	SLIDING_START,
 	SLIDING_LOOP,
 	SLIDING_END,
@@ -37,9 +38,11 @@ const WALL_STATES := [
 const RUN_SPEED := 120
 const FLOOR_ACCELERATION := RUN_SPEED / 0.2
 const AIR_ACCELERATION := RUN_SPEED / 0.1
+const DASH_SPEED := 600.0
 const JUMP_VELOCITY := -400
 const WALL_JUMP_VELOCITY := Vector2(250, -420)
-const KNOCKBACK_AMOUNT := 512.0
+const KNOCKBACK_AMOUNT := 256.0
+const DOWN_ATTACK_KNOCKBACK_AMOUNT := -320.0
 const SLIDING_DURATION := 0.3
 const SLIDING_SPEED := 256.0
 const SLIDING_ENERGY := 4.0
@@ -63,6 +66,7 @@ var pending_damage: Damage
 var fall_from_y: float
 var interacting_with: Array[Interactable]
 var can_second_jump := false
+var can_dash := true
 
 @onready var slide_jump_coyote_timer: Timer = $SlideJumpCoyoteTimer
 @onready var graphics: Node2D = $Graphics
@@ -153,6 +157,9 @@ func tick_physics(state: State, delta: float) -> void:
 		State.WALL_SLIDING:
 			move(default_gravity / 15, delta)
 			direction = Direction.LEFT if get_wall_normal().x < 0 else Direction.RIGHT
+			
+		State.DASH:
+			dash(delta)
 		
 		State.WALL_JUMP:
 			if state_machine.state_time < 0.1:
@@ -162,7 +169,7 @@ func tick_physics(state: State, delta: float) -> void:
 				move(default_gravity, delta)
 		
 		State.GROUND_ATTACK:
-			stand(default_gravity, delta)
+			move(default_gravity, delta)
 		
 		State.JUMP_ATTACK, State.DOWN_ATTACK, State.UP_ATTACK:
 			move(default_gravity, delta)
@@ -191,6 +198,7 @@ func move(gravity: float, delta: float) -> void:
 		direction = Direction.LEFT if movement < 0 else Direction.RIGHT
 	
 	move_and_slide()
+	
 
 
 func stand(gravity: float, delta: float) -> void:
@@ -207,6 +215,12 @@ func stop(gravity: float, delta: float) -> void:
 	
 	move_and_slide()
 
+
+func dash(delta: float) -> void:
+	velocity.x = graphics.scale.x * DASH_SPEED
+	velocity.y = 0
+	
+	move_and_slide()
 
 func slide(delta: float) -> void:
 	velocity.x = graphics.scale.x * SLIDING_SPEED
@@ -260,6 +274,9 @@ func get_next_state(state: State) -> int:
 	if pending_damage:
 		return State.HURT
 	
+	if is_on_floor():
+		can_dash = true
+		
 	var can_jump := is_on_floor() or coyote_timer.time_left > 0
 	var should_jump := can_jump and jump_request_timer.time_left > 0
 	if should_jump:
@@ -275,6 +292,8 @@ func get_next_state(state: State) -> int:
 		State.IDLE:
 			if Input.is_action_just_pressed("attack"):
 				return State.GROUND_ATTACK
+			if can_dash and Input.is_action_just_pressed("dash"):
+				return State.DASH
 			if should_slide():
 				return State.SLIDING_START
 			if not is_still:
@@ -283,6 +302,8 @@ func get_next_state(state: State) -> int:
 		State.RUNNING:
 			if Input.is_action_just_pressed("attack"):
 				return State.GROUND_ATTACK
+			if can_dash and Input.is_action_just_pressed("dash"):
+				return State.DASH
 			if should_slide():
 				return State.SLIDING_START
 			if is_still:
@@ -293,6 +314,8 @@ func get_next_state(state: State) -> int:
 				can_second_jump = true
 			if can_second_jump and jump_request_timer.time_left > 0:
 				return State.SECOND_JUMP
+			if can_dash and Input.is_action_just_pressed("dash"):
+				return State.DASH
 			if velocity.y >= 0:
 				return State.FALL
 			if Input.is_action_just_pressed("attack") and Input.is_action_pressed("down"):
@@ -310,6 +333,13 @@ func get_next_state(state: State) -> int:
 				return State.DOWN_ATTACK
 			if Input.is_action_just_pressed("attack"):
 				return State.JUMP_ATTACK
+			if can_dash and Input.is_action_just_pressed("dash"):
+				return State.DASH
+		
+		State.DASH:
+			can_dash = false
+			if not knight_animation_player.is_playing():
+				return State.IDLE
 				
 		State.FALL:
 			if is_on_floor():
@@ -321,6 +351,8 @@ func get_next_state(state: State) -> int:
 				return State.WALL_JUMP
 			if can_second_jump and jump_request_timer.time_left > 0:
 				return State.SECOND_JUMP
+			if can_dash and Input.is_action_just_pressed("dash"):
+				return State.DASH
 			if Input.is_action_just_pressed("attack") and Input.is_action_pressed("down"):
 				print("down attack fall")
 				return State.DOWN_ATTACK
@@ -344,6 +376,8 @@ func get_next_state(state: State) -> int:
 				can_second_jump = true
 			if can_second_jump and jump_request_timer.time_left > 0:
 				return State.SECOND_JUMP
+			if can_dash and Input.is_action_just_pressed("dash"):
+				return State.DASH
 			if can_wall_slide() and not is_first_tick:
 				return State.WALL_SLIDING
 			if velocity.y >= 0:
@@ -425,6 +459,10 @@ func transition_state(from: State, to: State) -> void:
 			jump_request_timer.stop()
 			SoundManager.play_sfx("Jump")
 		
+		State.DASH:
+			knight_animation_player.play("dash")
+			velocity.y = 0
+		
 		State.FALL:
 			knight_animation_player.play("fall")
 			if from in GROUND_STATES:
@@ -435,6 +473,7 @@ func transition_state(from: State, to: State) -> void:
 		
 		State.LANDING:
 			knight_animation_player.play("landing")
+			SoundManager.play_sfx("HardLand")
 		
 		State.WALL_SLIDING:
 			SoundManager.play_sfx("WallSliding")
@@ -505,3 +544,8 @@ func _on_hurtbox_hurt(hitbox: Hitbox) -> void:
 	pending_damage = Damage.new()
 	pending_damage.amount = 1
 	pending_damage.source = hitbox.owner
+
+
+func _on_hitbox_hit(hurtbox: Variant) -> void:
+	if state_machine.current_state == State.DOWN_ATTACK:
+		velocity.y = DOWN_ATTACK_KNOCKBACK_AMOUNT
