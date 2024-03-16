@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c47wu7dvnev08"
-path="res://.godot/imported/Mossy - MossyHills.png-7a0a9adcb4119038260a71efde16464e.ctex"
+uid="uid://c5qyeaoysju87"
+path="res://.godot/imported/mid_background.png-91f4cc5852d4e1d50464225d5566486a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/legacy_fantasy/under_water/Mossy Tileset/Mossy - MossyHills.png"
-dest_files=["res://.godot/imported/Mossy - MossyHills.png-7a0a9adcb4119038260a71efde16464e.ctex"]
+source_file="res://assets/legacy_fantasy/forest/Background/mid_background.png"
+dest_files=["res://.godot/imported/mid_background.png-91f4cc5852d4e1d50464225d5566486a.ctex"]
 
 [params]
 
