@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=3 uid="uid://bmfcrratgaax0"]
+[gd_scene load_steps=77 format=3 uid="uid://bmfcrratgaax0"]
 
 [ext_resource type="Script" path="res://worlds/world.gd" id="1_f0dk2"]
 [ext_resource type="AudioStream" uid="uid://bama5iv0jqs0u" path="res://assets/bgm/21 11 forest LOOP.mp3" id="2_145ll"]
@@ -59,6 +59,7 @@
 [ext_resource type="Texture2D" uid="uid://cjl1xxlvmin24" path="res://assets/legacy_fantasy/under_water/Plant Animations/Plant 8 Poison/PlantPosion_00024.png" id="56_f8inr"]
 [ext_resource type="Texture2D" uid="uid://doll6f6chw7ud" path="res://assets/legacy_fantasy/under_water/Plant Animations/Plant 8 Poison/PlantPosion_00026.png" id="57_bk1bg"]
 [ext_resource type="Texture2D" uid="uid://1hqjlpa7xyo8" path="res://assets/legacy_fantasy/under_water/Plant Animations/Plant 8 Poison/PlantPosion_00028.png" id="58_ai7r8"]
+[ext_resource type="PackedScene" uid="uid://iqug2whs8xu5" path="res://enemies/boss/niumowang.tscn" id="60_h4uby"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vtavp"]
 texture = ExtResource("7_aybuu")
@@ -73464,3 +73465,6 @@ position = Vector2(703, 29)
 
 [node name="Boar2" parent="." instance=ExtResource("9_gket7")]
 position = Vector2(564, 103)
+
+[node name="NiuMoWang" parent="." instance=ExtResource("60_h4uby")]
+position = Vector2(1477, 205)

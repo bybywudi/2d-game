@@ -38,7 +38,7 @@ const WALL_STATES := [
 const RUN_SPEED := 120
 const FLOOR_ACCELERATION := RUN_SPEED / 0.2
 const AIR_ACCELERATION := RUN_SPEED / 0.1
-const DASH_SPEED := 600.0
+const DASH_SPEED := 300.0
 const JUMP_VELOCITY := -400
 const WALL_JUMP_VELOCITY := Vector2(250, -420)
 const KNOCKBACK_AMOUNT := 256.0
@@ -93,6 +93,7 @@ var can_dash := true
 @onready var attack_1_player: AnimationPlayer = $Attack1Player
 @onready var down_attack_player: AnimationPlayer = $DownAttackPlayer
 @onready var up_attack_player: AnimationPlayer = $UpAttackPlayer
+@onready var dash_cool_down_timer: Timer = $DashCoolDownTimer
 
 
 
@@ -255,6 +256,9 @@ func unregister_interactable(v: Interactable) -> void:
 
 func can_wall_slide() -> bool:
 	return is_on_wall() and hand_checker.is_colliding() and foot_checker.is_colliding()
+	
+func should_dash() -> bool:
+	return can_dash and Input.is_action_just_pressed("dash") and dash_cool_down_timer.time_left == 0
 
 
 func should_slide() -> bool:
@@ -290,9 +294,11 @@ func get_next_state(state: State) -> int:
 	
 	match state:
 		State.IDLE:
+			if Input.is_action_just_pressed("attack") and Input.is_action_pressed("up"):
+				return State.UP_ATTACK
 			if Input.is_action_just_pressed("attack"):
 				return State.GROUND_ATTACK
-			if can_dash and Input.is_action_just_pressed("dash"):
+			if should_dash():
 				return State.DASH
 			if should_slide():
 				return State.SLIDING_START
@@ -300,9 +306,11 @@ func get_next_state(state: State) -> int:
 				return State.RUNNING
 		
 		State.RUNNING:
+			if Input.is_action_just_pressed("attack") and Input.is_action_pressed("up"):
+				return State.UP_ATTACK
 			if Input.is_action_just_pressed("attack"):
 				return State.GROUND_ATTACK
-			if can_dash and Input.is_action_just_pressed("dash"):
+			if should_dash():
 				return State.DASH
 			if should_slide():
 				return State.SLIDING_START
@@ -314,12 +322,13 @@ func get_next_state(state: State) -> int:
 				can_second_jump = true
 			if can_second_jump and jump_request_timer.time_left > 0:
 				return State.SECOND_JUMP
-			if can_dash and Input.is_action_just_pressed("dash"):
+			if should_dash():
 				return State.DASH
 			if velocity.y >= 0:
 				return State.FALL
+			if Input.is_action_just_pressed("attack") and Input.is_action_pressed("up"):
+				return State.UP_ATTACK
 			if Input.is_action_just_pressed("attack") and Input.is_action_pressed("down"):
-				print("down attack jump")
 				return State.DOWN_ATTACK
 			if Input.is_action_just_pressed("attack"):
 				return State.JUMP_ATTACK
@@ -328,12 +337,13 @@ func get_next_state(state: State) -> int:
 			can_second_jump = false
 			if velocity.y >= 0:
 				return State.FALL
+			if Input.is_action_just_pressed("attack") and Input.is_action_pressed("up"):
+				return State.UP_ATTACK
 			if Input.is_action_just_pressed("attack") and Input.is_action_pressed("down"):
-				print("down attack second jump")
 				return State.DOWN_ATTACK
 			if Input.is_action_just_pressed("attack"):
 				return State.JUMP_ATTACK
-			if can_dash and Input.is_action_just_pressed("dash"):
+			if should_dash():
 				return State.DASH
 		
 		State.DASH:
@@ -351,10 +361,11 @@ func get_next_state(state: State) -> int:
 				return State.WALL_JUMP
 			if can_second_jump and jump_request_timer.time_left > 0:
 				return State.SECOND_JUMP
-			if can_dash and Input.is_action_just_pressed("dash"):
+			if should_dash():
 				return State.DASH
+			if Input.is_action_just_pressed("attack") and Input.is_action_pressed("up"):
+				return State.UP_ATTACK
 			if Input.is_action_just_pressed("attack") and Input.is_action_pressed("down"):
-				print("down attack fall")
 				return State.DOWN_ATTACK
 			if Input.is_action_just_pressed("attack"):
 				return State.JUMP_ATTACK
@@ -364,6 +375,7 @@ func get_next_state(state: State) -> int:
 				return State.IDLE
 		
 		State.WALL_SLIDING:
+			can_dash = true
 			if jump_request_timer.time_left > 0 and wall_slide_min_timer.time_left == 0:
 				return State.WALL_JUMP
 			if is_on_floor():
@@ -376,14 +388,15 @@ func get_next_state(state: State) -> int:
 				can_second_jump = true
 			if can_second_jump and jump_request_timer.time_left > 0:
 				return State.SECOND_JUMP
-			if can_dash and Input.is_action_just_pressed("dash"):
+			if should_dash():
 				return State.DASH
 			if can_wall_slide() and not is_first_tick:
 				return State.WALL_SLIDING
 			if velocity.y >= 0:
 				return State.FALL
+			if Input.is_action_just_pressed("attack") and Input.is_action_pressed("up"):
+				return State.UP_ATTACK
 			if Input.is_action_just_pressed("attack") and Input.is_action_pressed("down"):
-				print("down attack wall jump")
 				return State.DOWN_ATTACK
 			if Input.is_action_just_pressed("attack"):
 				return State.JUMP_ATTACK
@@ -396,6 +409,10 @@ func get_next_state(state: State) -> int:
 			if not knight_animation_player.is_playing():
 				return State.FALL
 		#
+		State.UP_ATTACK:
+			if not knight_animation_player.is_playing():
+				return State.IDLE
+				
 		State.DOWN_ATTACK:
 			if not knight_animation_player.is_playing():
 				return State.FALL
@@ -461,6 +478,7 @@ func transition_state(from: State, to: State) -> void:
 		
 		State.DASH:
 			knight_animation_player.play("dash")
+			dash_cool_down_timer.start()
 			velocity.y = 0
 		
 		State.FALL:
@@ -507,6 +525,11 @@ func transition_state(from: State, to: State) -> void:
 		State.DOWN_ATTACK:
 			knight_animation_player.play("down_attack")
 			down_attack_player.play("down_attack")
+			SoundManager.play_sfx("Attack")
+		
+		State.UP_ATTACK:
+			knight_animation_player.play("up_attack")
+			up_attack_player.play("up_attack")
 			SoundManager.play_sfx("Attack")
 		
 		State.HURT:
