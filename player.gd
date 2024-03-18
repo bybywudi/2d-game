@@ -563,7 +563,6 @@ func transition_state(from: State, to: State) -> void:
 func _on_hurtbox_hurt(hitbox: Hitbox) -> void:
 	if invincible_timer.time_left > 0:
 		return
-	
 	pending_damage = Damage.new()
 	pending_damage.amount = 1
 	pending_damage.source = hitbox.owner
