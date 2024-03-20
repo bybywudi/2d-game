@@ -18,7 +18,8 @@ const KNOCKBACK_AMOUNT := 256.0
 const FAR_FROM_PLAYER_DISTANCE := 150.0
 const NEER_WITH_PLAYER_DISTANCE := 80.0
 const WALK_SPEED := -100
-const DASH_SPEED := -200
+const DASH_SPEED := -300
+const ROTATE_SPEED := -200
 const DASH_TIME := 2
 const JUMP_X_SPEED := -200.0
 const JUMP_Y_SPEED := -380
@@ -40,6 +41,7 @@ var pending_damage: Damage
 @onready var attack_2_cool_down_timer: Timer = $Attack2CoolDownTimer
 @onready var jump_to_player_cool_down_timer: Timer = $JumpToPlayerCoolDownTimer
 @onready var jump_away_from_player_cool_down_timer: Timer = $JumpAwayFromPlayerCoolDownTimer
+@onready var attack_4_cool_down_timer: Timer = $Attack4CoolDownTimer
 
 
 #func can_see_player() -> bool:
@@ -93,7 +95,7 @@ func tick_physics(state: State, delta: float) -> void:
 		pending_damage = null
 		
 	match state:
-		State.IDLE, State.ATTACK_1, State.ATTACK_2:
+		State.IDLE, State.ATTACK_1, State.ATTACK_2, State.ATTACK_4:
 			move(0.0, delta)
 		
 		State.JUMP_TO_PLAYER:
@@ -105,10 +107,13 @@ func tick_physics(state: State, delta: float) -> void:
 		State.WALK:
 			move(WALK_SPEED, delta)
 		
-		State.DASH, State.ROTATE:
+		State.DASH:
 			move(DASH_SPEED, delta)
+			
+		State.ROTATE:
+			move(ROTATE_SPEED, delta)
 		
-		State.FALL:
+		State.FALL, State.JUMP_ATTACK:
 			move(fall_x_speed, delta)
 		
 
@@ -135,10 +140,15 @@ func get_next_state(state: State) -> int:
 				if rotate_cool_down_timer.time_left == 0:
 					return State.ROTATE
 			if too_near_with_player():
-				return State.JUMP_AWAY_FROM_PLAYER
+				if attack_4_cool_down_timer.time_left == 0:
+					return State.ATTACK_4
+				if jump_away_from_player_cool_down_timer.time_left == 0:
+					return State.JUMP_AWAY_FROM_PLAYER
 			
 		
 		State.JUMP_TO_PLAYER:
+			if jump_attack_cool_down_timer.time_left == 0:
+				return State.JUMP_ATTACK
 			if velocity.y >= 0:
 				return State.FALL
 		
@@ -148,7 +158,13 @@ func get_next_state(state: State) -> int:
 		
 		State.FALL:
 			if is_on_floor():
-				return State.ATTACK_1
+				if attack_4_cool_down_timer.time_left == 0:
+					return State.ATTACK_4
+				return State.IDLE
+		
+		State.JUMP_ATTACK:
+			if not animation_player.is_playing():
+				return State.IDLE
 				
 		State.WALK:
 			if not far_from_player():
@@ -164,6 +180,10 @@ func get_next_state(state: State) -> int:
 				return State.IDLE
 		
 		State.ATTACK_2:
+			if not animation_player.is_playing():
+				return State.IDLE
+		
+		State.ATTACK_4:
 			if not animation_player.is_playing():
 				return State.IDLE
 		
@@ -200,7 +220,8 @@ func transition_state(from: State, to: State) -> void:
 			animation_player.play("attack2")
 		
 		State.ATTACK_4:
-			animation_player.play("attack1")
+			attack_4_cool_down_timer.start()
+			animation_player.play("attack4")
 		
 		State.JUMP_TO_PLAYER:
 			jump_to_player_cool_down_timer.start()
@@ -210,6 +231,7 @@ func transition_state(from: State, to: State) -> void:
 			animation_player.play("jump")
 		
 		State.JUMP_AWAY_FROM_PLAYER:
+			jump_away_from_player_cool_down_timer.start()
 			face_to_player()
 			fall_x_speed = -JUMP_X_SPEED
 			velocity.y = JUMP_Y_SPEED
@@ -221,6 +243,10 @@ func transition_state(from: State, to: State) -> void:
 			
 		State.FALL:
 			animation_player.play("fall")
+		
+		State.JUMP_ATTACK:
+			jump_attack_cool_down_timer.start()
+			animation_player.play("jump_attack")
 		
 		State.DASH:
 			dash_cool_down_timer.start()
