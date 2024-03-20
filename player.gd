@@ -190,7 +190,7 @@ func tick_physics(state: State, delta: float) -> void:
 func move(gravity: float, delta: float) -> void:
 	var movement := Input.get_axis("move_left", "move_right")
 	var acceleration := FLOOR_ACCELERATION if is_on_floor() else AIR_ACCELERATION
-	if movement * velocity.x < 0:
+	if movement * velocity.x < 0: #能够让角色快速转身
 		velocity.x = 0
 	velocity.x = move_toward(velocity.x, movement * RUN_SPEED, acceleration * delta)
 	velocity.y += gravity * delta
