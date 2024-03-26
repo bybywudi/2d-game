@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://classes/StateMachine.gd" id="1_8eahb"]
 [ext_resource type="Script" path="res://enemies/enemy.gd" id="1_58ytu"]
-[ext_resource type="Script" path="res://classes/Hitbox.gd" id="2_ux2dh"]
+[ext_resource type="Script" path="res://classes/EnemyHitbox.gd" id="2_ahq72"]
 [ext_resource type="Script" path="res://classes/Hurtbox.gd" id="3_d34iw"]
 [ext_resource type="Script" path="res://classes/Stats.gd" id="5_frl6o"]
 
@@ -15,9 +15,10 @@ script = ExtResource("1_58ytu")
 [node name="Sprite2D" type="Sprite2D" parent="Graphics"]
 
 [node name="Hitbox" type="Area2D" parent="Graphics"]
+visible = false
 collision_layer = 0
 collision_mask = 8
-script = ExtResource("2_ux2dh")
+script = ExtResource("2_ahq72")
 
 [node name="Hurtbox" type="Area2D" parent="Graphics"]
 collision_layer = 16

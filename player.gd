@@ -67,6 +67,7 @@ var fall_from_y: float
 var interacting_with: Array[Interactable]
 var can_second_jump := false
 var can_dash := true
+var last_on_floor_position = global_position
 
 @onready var slide_jump_coyote_timer: Timer = $SlideJumpCoyoteTimer
 @onready var graphics: Node2D = $Graphics
@@ -280,6 +281,7 @@ func get_next_state(state: State) -> int:
 	
 	if is_on_floor():
 		can_dash = true
+		last_on_floor_position = global_position
 		
 	var can_jump := is_on_floor() or coyote_timer.time_left > 0
 	var should_jump := can_jump and jump_request_timer.time_left > 0
@@ -560,12 +562,14 @@ func transition_state(from: State, to: State) -> void:
 	is_first_tick = true
 
 
-func _on_hurtbox_hurt(hitbox: Hitbox) -> void:
-	if invincible_timer.time_left > 0:
-		return
-	pending_damage = Damage.new()
-	pending_damage.amount = 1
-	pending_damage.source = hitbox.owner
+func _on_hurtbox_hurt(hitbox: EnemyHitbox) -> void:
+		if invincible_timer.time_left > 0:
+			return
+		pending_damage = Damage.new()
+		pending_damage.amount = 1
+		pending_damage.source = hitbox.owner
+		if hitbox.owner is Trap:
+			set_global_position(last_on_floor_position)
 
 
 func _on_hitbox_hit(hurtbox: Variant) -> void:

@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://dgsd7e0oufsp0"]
+
+[ext_resource type="Script" path="res://objects/traps/trap.gd" id="1_aefxd"]
+[ext_resource type="Script" path="res://classes/EnemyHitbox.gd" id="2_o5if3"]
+
+[node name="Trap" type="StaticBody2D"]
+script = ExtResource("1_aefxd")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+region_rect = Rect2(14, 168, 478, 180)
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+script = ExtResource("2_o5if3")

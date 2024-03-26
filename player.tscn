@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://c2c3ua4st26t6" path="res://assets/generic_char/char_blue_2.png" id="2_w5e4d"]
 [ext_resource type="Script" path="res://classes/StateMachine.gd" id="3_2nxuk"]
 [ext_resource type="Script" path="res://classes/Hurtbox.gd" id="3_6gh42"]
-[ext_resource type="Script" path="res://classes/Hitbox.gd" id="4_ksant"]
+[ext_resource type="Script" path="res://classes/EnemyHitbox.gd" id="4_bmuxq"]
 [ext_resource type="Texture2D" uid="uid://dnbt0oei40bg8" path="res://assets/generic_char/knight/slash/SlashAlt_000.png" id="5_wkq8r"]
 [ext_resource type="Texture2D" uid="uid://byvi83ajinxi4" path="res://assets/generic_char/knight/slash/SlashAlt_001.png" id="6_qm0bj"]
 [ext_resource type="Texture2D" uid="uid://cqc6fbwqdpqag" path="res://assets/generic_char/knight/slash/SlashAlt_002.png" id="7_5fpts"]
@@ -4378,6 +4378,7 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D"]
+position = Vector2(-2, 2)
 collision_layer = 2
 script = ExtResource("1_vlv3c")
 metadata/_edit_horizontal_guides_ = [-3.0]
@@ -4421,7 +4422,7 @@ shape = SubResource("RectangleShape2D_vniip")
 [node name="Hitbox" type="Area2D" parent="Graphics"]
 collision_layer = 0
 collision_mask = 16
-script = ExtResource("4_ksant")
+script = ExtResource("4_bmuxq")
 
 [node name="AttackShape" type="CollisionShape2D" parent="Graphics/Hitbox"]
 position = Vector2(20, -12)
@@ -4560,4 +4561,5 @@ autoplay = "default"
 frame_progress = 0.16227
 
 [connection signal="hurt" from="Graphics/Hurtbox" to="." method="_on_hurtbox_hurt"]
+[connection signal="hurt" from="Graphics/Hurtbox" to="Graphics/Hurtbox" method="_on_hurt"]
 [connection signal="hit" from="Graphics/Hitbox" to="." method="_on_hitbox_hit"]
