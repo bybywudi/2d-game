@@ -1,6 +1,6 @@
 [gd_scene load_steps=34 format=3 uid="uid://b05ccqix45nhr"]
 
-[ext_resource type="Script" path="res://worlds/huaguoshan1.gd" id="1_bbcdu"]
+[ext_resource type="Script" path="res://worlds/huaguoshan.gd" id="1_bbcdu"]
 [ext_resource type="AudioStream" uid="uid://dq1erq62u4xnv" path="res://assets/bgm/27 14 BOSS fixing LOOP.mp3" id="2_qmdw7"]
 [ext_resource type="Texture2D" uid="uid://ldl702vxclae" path="res://assets/legacy_fantasy/old_forest/Old ground.png" id="3_5pwt3"]
 [ext_resource type="Script" path="res://classes/EntryPoint.gd" id="4_dfegu"]
