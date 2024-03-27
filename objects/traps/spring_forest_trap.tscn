@@ -10,6 +10,7 @@ size = Vector2(460, 148.75)
 size = Vector2(205, 88)
 
 [node name="Trap" instance=ExtResource("1_lbn4n")]
+scale = Vector2(0.25, 0.25)
 
 [node name="Sprite2D" parent="." index="0"]
 position = Vector2(7, 0)
