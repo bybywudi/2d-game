@@ -5,6 +5,7 @@ extends Node2D
 
 @onready var camera_2d: Camera2D = $Player/Camera2D
 @onready var player: CharacterBody2D = $Player
+
 #@onready var flower_animations: AnimatedSprite2D = $Decorations/BackgroundDecorations/Trees/FlowerAnimations
 
 
