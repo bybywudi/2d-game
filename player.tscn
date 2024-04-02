@@ -4416,7 +4416,7 @@ collision_mask = 0
 script = ExtResource("3_6gh42")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Graphics/Hurtbox"]
-position = Vector2(0, -14)
+position = Vector2(0, -16)
 shape = SubResource("RectangleShape2D_vniip")
 
 [node name="Hitbox" type="Area2D" parent="Graphics"]
@@ -4470,7 +4470,7 @@ animation = &"up_attack"
 flip_h = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -14)
+position = Vector2(0, -16)
 shape = SubResource("RectangleShape2D_1t4ma")
 
 [node name="KnightAnimationPlayer" type="AnimationPlayer" parent="."]
