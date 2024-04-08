@@ -30,7 +30,7 @@ func _input(event: InputEvent) -> void:
 			if current_line + 1 < LINES.size():
 				show_line(current_line + 1)
 			else:
-				Game.back_to_title()
+				GameGlobal.back_to_title()
 
 
 func show_line(line: int) -> void:

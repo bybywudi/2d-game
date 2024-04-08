@@ -10,5 +10,5 @@ func _ready() -> void:
 	
 	value_changed.connect(func (v: float):
 		SoundManager.set_volume(bus_index, v)
-		Game.save_config()
+		GameGlobal.save_config()
 	)

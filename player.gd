@@ -78,7 +78,7 @@ var last_on_floor_position = global_position
 @onready var hand_checker: RayCast2D = $Graphics/HandChecker
 @onready var foot_checker: RayCast2D = $Graphics/FootChecker
 @onready var state_machine: Node = $StateMachine
-@onready var stats: Node = Game.player_stats
+@onready var stats: Node = GameGlobal.player_stats
 @onready var jump_wall_edge_acceleration_timer: Timer = $JumpWallEdgeAccelerationTimer
 @onready var wall_jump_wall_edge_acceleration_timer: Timer = $WallJumpWallEdgeAccelerationTimer
 @onready var second_jump_wait_timer: Timer = $SecondJumpWaitTimer
@@ -547,7 +547,7 @@ func transition_state(from: State, to: State) -> void:
 			knight_animation_player.play("die")
 			invincible_timer.stop()
 			interacting_with.clear()
-			Game.load_game()
+			GameGlobal.load_game()
 		
 		State.SLIDING_START:
 			knight_animation_player.play("sliding_start")

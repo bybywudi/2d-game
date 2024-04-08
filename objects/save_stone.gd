@@ -7,4 +7,4 @@ func interact() -> void:
 	super()
 	
 	animation_player.play("activated")
-	Game.save_game()
+	GameGlobal.save_game()

@@ -9,7 +9,7 @@ extends HBoxContainer
 
 func _ready() -> void:
 	if not stats:
-		stats = Game.player_stats
+		stats = GameGlobal.player_stats
 	
 	stats.health_changed.connect(update_health)
 	update_health(true)

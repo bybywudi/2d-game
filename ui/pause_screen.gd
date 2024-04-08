@@ -28,4 +28,4 @@ func _on_resume_pressed() -> void:
 
 
 func _on_quit_pressed() -> void:
-	Game.back_to_title()
+	GameGlobal.back_to_title()

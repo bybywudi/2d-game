@@ -20,10 +20,10 @@ func _input(event: InputEvent) -> void:
 		event is InputEventJoypadButton
 	):
 		if event.is_pressed() and not event.is_echo():
-			if Game.has_save():
-				Game.load_game()
+			if GameGlobal.has_save():
+				GameGlobal.load_game()
 			else:
-				Game.back_to_title()
+				GameGlobal.back_to_title()
 
 
 func show_game_over() -> void:

@@ -6,7 +6,7 @@ extends Control
 
 
 func _ready() -> void:
-	load_game.disabled = not Game.has_save()
+	load_game.disabled = not GameGlobal.has_save()
 	
 	new_game.grab_focus()
 	
@@ -15,11 +15,11 @@ func _ready() -> void:
 
 
 func _on_new_game_pressed() -> void:
-	Game.new_game()
+	GameGlobal.new_game()
 
 
 func _on_load_game_pressed() -> void:
-	Game.load_game()
+	GameGlobal.load_game()
 
 
 func _on_exit_game_pressed() -> void:
