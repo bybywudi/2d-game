@@ -66,6 +66,8 @@ func save_game() -> void:
 	var scene_name := scene.scene_file_path.get_file().get_basename()
 	world_states[scene_name] = scene.to_dict()
 	
+	player_stats.health = player_stats.max_health
+
 	var data := {
 		world_states=world_states,
 		stats=player_stats.to_dict(),
@@ -107,7 +109,7 @@ func load_game() -> void:
 
 
 func new_game() -> void:
-	change_scene("res://worlds/forest.tscn", {
+	change_scene("res://worlds/huaguoshan4.tscn", {
 		duration=1,
 		init=func ():
 			world_states = {}

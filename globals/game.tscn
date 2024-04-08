@@ -9,6 +9,7 @@ script = ExtResource("1_lmeav")
 
 [node name="PlayerStats" type="Node" parent="."]
 script = ExtResource("2_r1ynw")
+max_health = 10
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchors_preset = 15

@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://bw5lrw6i6pqhi"]
+[gd_scene load_steps=46 format=3 uid="uid://bw5lrw6i6pqhi"]
 
 [ext_resource type="Script" path="res://worlds/huaguoshan.gd" id="1_p5aoc"]
 [ext_resource type="AudioStream" uid="uid://dq1erq62u4xnv" path="res://assets/bgm/27 14 BOSS fixing LOOP.mp3" id="2_ufxm2"]
@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://msa538wraan8" path="res://assets/legacy_fantasy/green_forest/first layer greens.png" id="13_xvb23"]
 [ext_resource type="Texture2D" uid="uid://bjg434hvtc46o" path="res://assets/legacy_fantasy/green_forest/sky 3.png" id="14_2gy77"]
 [ext_resource type="Texture2D" uid="uid://f73s6omo1ewl" path="res://assets/legacy_fantasy/green_forest/foliage.png" id="15_yqfqt"]
+[ext_resource type="PackedScene" uid="uid://bys6xbjr8eger" path="res://enemies/boar.tscn" id="17_dbxpk"]
 [ext_resource type="Texture2D" uid="uid://d04jbrigro26o" path="res://assets/legacy_fantasy/green_forest/forest gr sides.png" id="18_ilqly"]
 [ext_resource type="Texture2D" uid="uid://b0stcb411kly7" path="res://assets/legacy_fantasy/old_forest/dark sides.png" id="19_031dx"]
 [ext_resource type="Texture2D" uid="uid://egiqwpd3rogf" path="res://assets/legacy_fantasy/old_forest/dark fill.png" id="20_gkbd3"]
@@ -22848,6 +22849,21 @@ motion_scale = Vector2(1, 1.1)
 
 [node name="Enemies" type="Node2D" parent="."]
 
+[node name="Boar" parent="Enemies" instance=ExtResource("17_dbxpk")]
+position = Vector2(1134, -31)
+
+[node name="Boar2" parent="Enemies" instance=ExtResource("17_dbxpk")]
+position = Vector2(1000, 404)
+
+[node name="Boar3" parent="Enemies" instance=ExtResource("17_dbxpk")]
+position = Vector2(853, -27)
+
+[node name="Boar4" parent="Enemies" instance=ExtResource("17_dbxpk")]
+position = Vector2(455, 705)
+
+[node name="Boar5" parent="Enemies" instance=ExtResource("17_dbxpk")]
+position = Vector2(695, 692)
+
 [node name="Traps" type="Node2D" parent="."]
 scale = Vector2(0.25, 0.25)
 
@@ -26107,7 +26123,7 @@ layer_2/tile_data = PackedInt32Array(3407866, 131073, 0, 3473402, 131073, 1, 353
 position = Vector2(13.0394, -21.3228)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
-position = Vector2(-1.0394, -33.6772)
+position = Vector2(-0.0393982, -49.6772)
 limit_top = -620
 limit_right = 2387
 limit_bottom = 733

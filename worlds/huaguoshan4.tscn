@@ -1,9 +1,11 @@
-[gd_scene load_steps=50 format=3 uid="uid://dd7fyg62e07pg"]
+[gd_scene load_steps=55 format=3 uid="uid://dd7fyg62e07pg"]
 
 [ext_resource type="Script" path="res://worlds/huaguoshan.gd" id="1_vlhy5"]
 [ext_resource type="AudioStream" uid="uid://dq1erq62u4xnv" path="res://assets/bgm/27 14 BOSS fixing LOOP.mp3" id="2_u576b"]
+[ext_resource type="PackedScene" uid="uid://iqug2whs8xu5" path="res://enemies/boss/niumowang.tscn" id="3_4l44s"]
 [ext_resource type="Texture2D" uid="uid://ldl702vxclae" path="res://assets/legacy_fantasy/old_forest/Old ground.png" id="3_grktv"]
 [ext_resource type="Texture2D" uid="uid://bcdluyb8tdpk8" path="res://assets/legacy_fantasy/old_forest/Old ground 9slice.png" id="4_l3xqw"]
+[ext_resource type="Script" path="res://enemies/boss/BossFightArea.gd" id="4_ujbfo"]
 [ext_resource type="Texture2D" uid="uid://c2a64qy86umxc" path="res://assets/legacy_fantasy/green_forest/forest gr fill.png" id="5_40682"]
 [ext_resource type="Texture2D" uid="uid://d04jbrigro26o" path="res://assets/legacy_fantasy/green_forest/forest gr sides.png" id="6_82bef"]
 [ext_resource type="Texture2D" uid="uid://b0stcb411kly7" path="res://assets/legacy_fantasy/old_forest/dark sides.png" id="8_stus8"]
@@ -29,7 +31,12 @@
 [ext_resource type="Texture2D" uid="uid://be81rv7uhpe1x" path="res://assets/legacy_fantasy/green_forest/fields. 1.png" id="17_yhvjv"]
 [ext_resource type="Texture2D" uid="uid://d4jdauislduwi" path="res://assets/legacy_fantasy/green_forest/mount big.png" id="18_ihbwu"]
 [ext_resource type="Texture2D" uid="uid://bsaa5hrw5unot" path="res://assets/legacy_fantasy/green_forest/clouds.png" id="19_i3tqj"]
+[ext_resource type="PackedScene" uid="uid://bys6xbjr8eger" path="res://enemies/boar.tscn" id="20_2x7le"]
 [ext_resource type="PackedScene" uid="uid://d08n7x2g8jvfe" path="res://player.tscn" id="26_sc645"]
+[ext_resource type="PackedScene" uid="uid://btn7p3ng6glfl" path="res://objects/save_stone.tscn" id="34_m8uki"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c046g"]
+size = Vector2(501.805, 248.5)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_chf2x"]
 texture = ExtResource("8_stus8")
@@ -23027,6 +23034,21 @@ bgm = ExtResource("2_u576b")
 metadata/_edit_horizontal_guides_ = [53.0, 35.0, 35.0, -696.0, -696.0, 733.0]
 metadata/_edit_vertical_guides_ = [-101.0, 2376.0, 1313.0, 2177.0, -88.0, 184.0, -88.0, 2063.0]
 
+[node name="Boss" type="Node2D" parent="."]
+
+[node name="NiuMoWang" parent="Boss" instance=ExtResource("3_4l44s")]
+position = Vector2(697, 922)
+
+[node name="BossFightArea" type="Area2D" parent="Boss"]
+position = Vector2(2777, 661)
+collision_layer = 0
+collision_mask = 8
+script = ExtResource("4_ujbfo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boss/BossFightArea"]
+position = Vector2(-1939, 128)
+shape = SubResource("RectangleShape2D_c046g")
+
 [node name="Decorations" type="Node2D" parent="."]
 
 [node name="Background-1" type="ParallaxBackground" parent="Decorations"]
@@ -23884,6 +23906,21 @@ region_enabled = true
 region_rect = Rect2(-18, 1080, 1926, 720)
 
 [node name="Enemies" type="Node2D" parent="."]
+
+[node name="Boar" parent="Enemies" instance=ExtResource("20_2x7le")]
+position = Vector2(703, -28)
+
+[node name="Boar2" parent="Enemies" instance=ExtResource("20_2x7le")]
+position = Vector2(1161, -26)
+
+[node name="Boar3" parent="Enemies" instance=ExtResource("20_2x7le")]
+position = Vector2(842.667, 356.903)
+
+[node name="Boar4" parent="Enemies" instance=ExtResource("20_2x7le")]
+position = Vector2(1051, 365)
+
+[node name="Boar5" parent="Enemies" instance=ExtResource("20_2x7le")]
+position = Vector2(950, 1061)
 
 [node name="Traps" type="Node2D" parent="."]
 scale = Vector2(0.25, 0.25)
@@ -25332,6 +25369,7 @@ region_enabled = true
 region_rect = Rect2(48, 12, 876, 228)
 
 [node name="Ground" type="TileMap" parent="."]
+visible = false
 position = Vector2(0, -432)
 scale = Vector2(0.5, 0.5)
 tile_set = SubResource("TileSet_p4gw1")
@@ -25371,7 +25409,16 @@ shadow_enabled = true
 color = Color(0.196078, 0.196078, 0.196078, 1)
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+visible = false
 occluder = SubResource("OccluderPolygon2D_xaxjv")
 
 [node name="LightOccluder2D2" type="LightOccluder2D" parent="."]
+visible = false
 occluder = SubResource("OccluderPolygon2D_a8myk")
+
+[node name="Objects" type="Node" parent="."]
+
+[node name="SaveStone" parent="Objects" instance=ExtResource("34_m8uki")]
+position = Vector2(1673, -347)
+
+[connection signal="enter" from="Boss/BossFightArea" to="Boss/NiuMoWang" method="_on_boss_fight_area_enter"]

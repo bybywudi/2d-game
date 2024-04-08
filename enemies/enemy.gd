@@ -14,7 +14,7 @@ signal died
 		if not is_node_ready():
 			await ready
 		graphics.scale.x = -direction
-@export var max_speed: float = 0
+@export var max_speed: float = 50
 @export var acceleration: float = 2000
 
 var default_gravity := ProjectSettings.get("physics/2d/default_gravity") as float
@@ -23,6 +23,9 @@ var default_gravity := ProjectSettings.get("physics/2d/default_gravity") as floa
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var state_machine: Node = $StateMachine
 @onready var stats: Node = $Stats
+#@onready var hitbox: EnemyHitbox = $Graphics/Hitbox
+#@onready var hurtbox: Hurtbox = $Graphics/Hurtbox
+#@onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 
 
 func move(speed: float, delta: float) -> void:
@@ -34,4 +37,11 @@ func move(speed: float, delta: float) -> void:
 
 func die() -> void:
 	died.emit()
-	queue_free()
+	set_process_mode(PROCESS_MODE_DISABLED)
+	#queue_free()
+
+
+func spawn() -> void:
+	set_process_mode(PROCESS_MODE_ALWAYS)
+	animation_player.play("idle")
+	stats.health = stats.max_health

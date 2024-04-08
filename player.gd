@@ -263,7 +263,7 @@ func should_dash() -> bool:
 
 
 func should_slide() -> bool:
-	return false	
+	return false
 	#if slide_request_timer.is_stopped():
 		#return false
 	#if stats.energy < SLIDING_ENERGY:
@@ -547,6 +547,7 @@ func transition_state(from: State, to: State) -> void:
 			knight_animation_player.play("die")
 			invincible_timer.stop()
 			interacting_with.clear()
+			Game.load_game()
 		
 		State.SLIDING_START:
 			knight_animation_player.play("sliding_start")
@@ -563,13 +564,13 @@ func transition_state(from: State, to: State) -> void:
 
 
 func _on_hurtbox_hurt(hitbox: EnemyHitbox) -> void:
-		if invincible_timer.time_left > 0:
-			return
-		pending_damage = Damage.new()
-		pending_damage.amount = 1
-		pending_damage.source = hitbox.owner
-		if hitbox.owner is Trap:
-			set_global_position(last_on_floor_position)
+	if invincible_timer.time_left > 0:
+		return
+	pending_damage = Damage.new()
+	pending_damage.amount = 1
+	pending_damage.source = hitbox.owner
+	if hitbox.owner is Trap:
+		set_global_position(last_on_floor_position)
 
 
 func _on_hitbox_hit(hurtbox: Variant) -> void:
